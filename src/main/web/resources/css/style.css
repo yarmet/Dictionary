@@ -48,7 +48,7 @@ a, p {
     top: 10%;
     left: 50%;
     margin-left: -230px;
-    width: 500px;
+    width: 550px;
     padding: 10px 10px;
     background: white;
     border-radius: 5px;
@@ -70,8 +70,11 @@ a, p {
 
 .popUpMsg .content {
     text-align: center;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
+
+
+
 
 .group {
     text-align: center;

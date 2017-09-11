@@ -1,12 +1,10 @@
-package com.components.tables;
+package com.components.models;
+
 
 import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by ruslan on 01.12.16.
- */
 @Data
 @Entity
 @Table(name = "word")

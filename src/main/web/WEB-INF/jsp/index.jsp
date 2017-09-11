@@ -7,9 +7,9 @@
 
 <head>
     <title>Spring</title>
-    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-    <script src="<c:url value="/resources/js/angular.min.js" />"></script>
+    <link href="<c:url value="/res/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/res/css/style.css" />" rel="stylesheet">
+    <script src="<c:url value="/res/js/angular.min.js" />"></script>
 </head>
 
 <body ng-app="app">
@@ -19,10 +19,12 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div ng-show="role_admin" class="nav navbar-nav">
-                <div class="navbar-brand"><a href="javascript:void(0);" ng-click="openWordEditorWindow()"> добавить слово</a></div>
+                <div class="navbar-brand"><a href="javascript:void(0);" ng-click="openWordEditorWindow()">добавить
+                    слово</a></div>
             </div>
             <div class="nav navbar-nav navbar-right">
-                <div class="navbar-brand"><a href="javascript:void(0);" ng-click="logout()">выйти</a></div>
+                <div class="navbar-brand"><a href="javascript:void(0);"  ng-show="!role_anonumous" ng-click="logout()">выйти</a></div>
+                <div class="navbar-brand"><a href="<c:url value='/login'/>" ng-show="role_anonumous">войти</a></div>
             </div>
         </div>
     </nav>
@@ -32,8 +34,10 @@
     <div class="group">
 
         <div class="group1">
-            <label> <input type="radio" name="loadlast" data-ng-model="loadLast" data-ng-value="true"> загрузить последние </label>
-            <label> <input type="radio" name="loadlast" data-ng-model="loadLast" data-ng-value="false" checked>загрузить все </label>
+            <label> <input type="radio" name="loadlast" data-ng-model="loadLast" data-ng-value="true"> загрузить
+                последние </label>
+            <label> <input type="radio" name="loadlast" data-ng-model="loadLast" data-ng-value="false" checked>загрузить
+                все </label>
         </div>
 
         <div class="group1">
@@ -48,8 +52,12 @@
             <div class="form-inline">
                 <input class="form-control" type="text" placeholder="русский" ng-model="russian">
                 <input class="form-control" type="text" placeholder="английский" ng-model="english"/>
-                <button ng-show="showAddButton" class="btn btn-danger" ng-click="sendToAddWord(english, russian)">запомнить</button>
-                <button ng-show="showEditButton" class="btn btn-danger" ng-click="sendToEditWord(english, russian)">ред.</button>
+                <button ng-show="showAddButton" class="btn btn-danger" ng-click="sendToAddWord(english, russian)">
+                    запомнить
+                </button>
+                <button ng-show="showEditButton" class="btn btn-danger" ng-click="sendToEditWord(english, russian)">
+                    ред.
+                </button>
             </div>
         </div>
     </div>
@@ -67,11 +75,13 @@
             <tbody>
             <tr ng-repeat="row in rows">
                 <td>
-                    <a href="javascript:void(0);" ng-click="showRussian = !showRussian" ng-show="!showRussian">показать</a>
+                    <a href="javascript:void(0);" ng-click="showRussian = !showRussian"
+                       ng-show="!showRussian">показать</a>
                     <div ng-show="showRussian"> {{row.russian}}</div>
                 </td>
                 <td>
-                    <a href="javascript:void(0);" ng-click="showEnglish = !showEnglish" ng-show="!showEnglish">показать</a>
+                    <a href="javascript:void(0);" ng-click="showEnglish = !showEnglish"
+                       ng-show="!showEnglish">показать</a>
                     <div ng-show="showEnglish"> {{row.english}}</div>
                 </td>
                 <td ng-show="role_admin">
@@ -103,6 +113,7 @@
         $scope.showWordEditorWindow = false;
 
         $scope.role_admin = false;
+        $scope.role_anonumous = false;
 
         $scope.closeWordEditorWindow = clearEditWindow;
 
@@ -136,7 +147,7 @@
         };
 
         $scope.sendToEditWord = function (english, russian) {
-            if (english == null || russian == null)  return;
+            if (english == null || russian == null) return;
             $scope.showEditButton = false;
             send("<c:url value='/editWord'/>", JSON.stringify({
                 id: $scope.edit_word_id,
@@ -146,7 +157,7 @@
         };
 
         $scope.sendToAddWord = function (english, russian) {
-            if (english == null || russian == null)  return;
+            if (english == null || russian == null) return;
             $scope.showAddButton = false;
             send("<c:url value='/addWord'/>", JSON.stringify({english: english, russian: russian}))
         };
@@ -171,7 +182,11 @@
 
         $http.post("<c:url value='/getUserRoles'/>").success(function (userRoles) {
             userRoles.forEach(function (role) {
-                if (role.authority === 'ROLE_ADMIN') $scope.role_admin = true;
+                if (role.authority === 'ROLE_ADMIN') {
+                    $scope.role_admin = true;
+                } else if(role.authority === 'ROLE_ANONYMOUS'){
+                    $scope.role_anonumous = true;
+                }
             });
         });
 //----------------------------------------------------------------------------------------------------------------------
