@@ -35,48 +35,49 @@
                 <div class="navbar-brand"><a href="<c:url value="/welcome"/>">главная</a></div>
             </div>
 
-
             <div class="nav navbar-nav navbar-right">
                 <div div class="navbar-brand"><a href="<c:url value="/login" />">войти</a></div>
             </div>
         </div>
     </nav>
 
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
 
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
-        <h2 class="form-signin-heading">Зарегистрироваться</h2>
-        <spring:bind path="username">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="username" class="form-control" placeholder="Username"
-                            autofocus="true"/>
-                <form:errors path="username"/>
-            </div>
-        </spring:bind>
+            <form:form method="POST" modelAttribute="userForm" class="form-signin">
+                <h2 class="form-signin-heading">Зарегистрироваться</h2>
+                <spring:bind path="username">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:input type="text" path="username" class="form-control" placeholder="Username"
+                                    autofocus="true"/>
+                        <form:errors path="username"/>
+                    </div>
+                </spring:bind>
 
-        <spring:bind path="password">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="password" class="form-control" placeholder="Password"/>
-                <form:errors path="password"/>
-            </div>
-        </spring:bind>
+                <spring:bind path="password">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:input type="password" path="password" class="form-control" placeholder="Password"/>
+                        <form:errors path="password"/>
+                    </div>
+                </spring:bind>
 
-        <spring:bind path="confirmPassword">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="confirmPassword" class="form-control"
-                            placeholder="Confirm your password"/>
-                <form:errors path="confirmPassword"/>
-            </div>
-        </spring:bind>
-
-        <button class="btn btn-lg btn-primary btn-block">Подтвердить</button>
-    </form:form>
-
+                <spring:bind path="confirmPassword">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:input type="password" path="confirmPassword" class="form-control"
+                                    placeholder="Confirm your password"/>
+                        <form:errors path="confirmPassword"/>
+                    </div>
+                </spring:bind>
+                <button class="btn btn-lg btn-primary btn-block">Подтвердить</button>
+            </form:form>
+        </div>
+    </div>
 
 </section>
 <!-- /container -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="${contextPath}/res/js/bootstrap.min.js"></script>
 
 </body>
 </html>
