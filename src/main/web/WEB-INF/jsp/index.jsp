@@ -23,7 +23,7 @@
                     слово</a></div>
             </div>
             <div class="nav navbar-nav navbar-right">
-                <div class="navbar-brand"><a href="javascript:void(0);"  ng-show="!role_anonumous" ng-click="logout()">выйти</a></div>
+                <div class="navbar-brand"><a href="<c:url value='/logout'/>"  ng-show="!role_anonumous">выйти</a></div>
                 <div class="navbar-brand"><a href="<c:url value='/login'/>" ng-show="role_anonumous">войти</a></div>
             </div>
         </div>
@@ -190,11 +190,6 @@
             });
         });
 //----------------------------------------------------------------------------------------------------------------------
-        $scope.logout = function () {
-            $http.post("<c:url value='/logout'/>").success(function () {
-                window.location.href = "<c:url value='/'/>";
-            })
-        };
 
         $scope.newWords = function () {
             var url = $scope.loadLast === false ? "<c:url value='/getWords'/>" : "<c:url value='/getLastWords'/>";
