@@ -3,6 +3,7 @@ package com.components.models;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -30,6 +31,9 @@ public class User {
 
     @Column(name = "registration_date")
     private Timestamp registrationDate;
+
+    @Column(name = "date_of_last_entry")
+    private Timestamp dateOfLastEntry;
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),

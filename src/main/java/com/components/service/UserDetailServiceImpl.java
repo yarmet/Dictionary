@@ -3,6 +3,7 @@ package com.components.service;
 import com.components.dao.UserDao;
 import com.components.models.Role;
 import com.components.models.User;
+import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,14 +21,18 @@ class UserDetailServiceImpl implements UserDetailsService {
     private UserDao userDao;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // пытаемся найти пользоватяеля
         User user = userDao.findByUsername(username);
-
+        // если такого нет, то кидаем ошибку
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-
+        // обновляем дату последнего логина на сайт
+        user.setDateOfLastEntry(Utils.getCurrentTimestampAsUTC());
+        userDao.save(user);
+        // загружаем все роли пользователя
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>(1);
         for (Role role : user.getRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
