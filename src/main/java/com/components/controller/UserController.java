@@ -5,7 +5,6 @@ import com.components.models.User;
 import com.components.service.SecurityService;
 import com.components.service.UserService;
 import com.components.validator.UserValidator;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +37,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "registry";
         }
-        userService.save(userForm);
+        userService.registryUser(userForm);
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
         return "redirect:/welcome";
     }

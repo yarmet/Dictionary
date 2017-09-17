@@ -5,7 +5,7 @@ import com.components.models.User;
 
 public interface UserService {
 
-    void save(User user);
+    void registryUser(User user);
 
     User findByUserName(String userName);
 
