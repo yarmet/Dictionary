@@ -40,7 +40,6 @@ class RandomWordsDaoImpl implements RandomWordsDao {
     @Override
     public List<Word> getRandomWordsForUser(User user, int wordCount) {
         Query query = entityManager.createQuery("select o from Word o WHERE userId=:userId order by rand()");
-        query.setParameter("prevMonth", Utils.getPreviousMonth());
         query.setParameter("userId", user.getId());
         query.setMaxResults(wordCount);
         return query.getResultList();
