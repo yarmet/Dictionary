@@ -28,6 +28,9 @@ public class WordController {
         return ResponseEntity.ok(wordsService.getLastRandomWords());
     }
 
+
+    // удалить, не нужно
+    @Deprecated
     @RequestMapping(value = "getUserRoles", method = RequestMethod.POST)
     public ResponseEntity<?> roles() {
         return ResponseEntity.ok(Utils.getUserRoles());

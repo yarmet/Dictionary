@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+import static com.components.utils.Utils.userIsLogged;
+
 @Service
 class WordsServiceImpl implements WordsService {
 
@@ -50,21 +52,17 @@ class WordsServiceImpl implements WordsService {
 
     @Override
     public List<Word> getRandomWords() {
-        boolean logged = Utils.userIsLogged();
-        if (logged) {
-            return randomWordsDao.getRandomWordsForUser(getLoggedUser(), wordCount);
-        }
-        return randomWordsDao.getAllRandomWords(wordCount);
+        return Utils.userIsLogged() ?
+                randomWordsDao.getRandomWordsForUser(getLoggedUser(), wordCount) :
+                randomWordsDao.getAllRandomWords(wordCount);
     }
 
 
     @Override
     public List<Word> getLastRandomWords() {
-        boolean logged = Utils.userIsLogged();
-        if (logged) {
-            return randomWordsDao.getLastRandomWordsForUser(getLoggedUser(), wordCount);
-        }
-        return randomWordsDao.getAllLastRandomWords(wordCount);
+        return userIsLogged() ?
+                randomWordsDao.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
+                randomWordsDao.getAllLastRandomWords(wordCount);
     }
 
 
