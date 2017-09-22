@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface RandomWordsDao {
 
-    List<Word> getRandomWords();
+    List<Word> getRandomWords(int wordCount);
 
-    List<Word> getLastRandomWords();
+    List<Word> getLastRandomWords(int wordCount);
 
 }
