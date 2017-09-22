@@ -11,6 +11,11 @@ import org.springframework.validation.Validator;
 @Service
 public class UserValidator implements Validator {
 
+    private static int INPUT_MAX_LENGTH = 15;
+    private static int INPUT_MIN_LENGTH = 3;
+
+
+
     @Autowired
     private UserService userService;
 
@@ -24,7 +29,7 @@ public class UserValidator implements Validator {
         User user = (User) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "Required");
 
-        if (user.getUsername().length() < 3 || user.getUsername().length() > 15) {
+        if (user.getUsername().length() < INPUT_MIN_LENGTH || user.getUsername().length() > INPUT_MAX_LENGTH) {
             errors.rejectValue("username", "size.userForm.username");
         }
         if (userService.findByUserName(user.getUsername()) != null) {
@@ -33,7 +38,7 @@ public class UserValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
 
-        if (user.getPassword().length() < 3 || user.getPassword().length() > 15) {
+        if (user.getPassword().length() < INPUT_MIN_LENGTH || user.getPassword().length() > INPUT_MAX_LENGTH) {
             errors.rejectValue("password", "size.userForm.password");
         }
         if (!user.getConfirmPassword().equals(user.getPassword())) {

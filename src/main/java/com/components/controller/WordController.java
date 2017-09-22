@@ -33,21 +33,21 @@ public class WordController {
         return ResponseEntity.ok(Utils.getUserRoles());
     }
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_USER"})
     @RequestMapping(value = "addWord", method = RequestMethod.POST)
     public ResponseEntity<?> addWord(@RequestBody Word word) {
         wordsService.save(word);
         return ResponseEntity.ok().build();
     }
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_USER"})
     @RequestMapping(value = "editWord", method = RequestMethod.POST)
     public ResponseEntity<?> editWord(@RequestBody Word word) {
         wordsService.update(word);
         return ResponseEntity.ok().build();
     }
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN","ROLE_USER"})
     @RequestMapping(value = "deleteWord", method = RequestMethod.POST)
     public ResponseEntity<?> deleteWord(@RequestBody Word word) {
         wordsService.delete(word);
