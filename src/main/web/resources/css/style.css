@@ -1,5 +1,6 @@
 
 body {
+    text-align: center;
     background: url("../img/bg.png");
 }
 
@@ -31,9 +32,9 @@ table td {
     text-align: center;
 }
 
-a, p {
-    font-size: 11pt;
-}
+/*a, p {*/
+    /*font-size: 11pt;*/
+/*}*/
 
 .popUpMsg-bg {
     position: absolute;
@@ -91,4 +92,35 @@ a, p {
 
 #newWords{
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+.positionAbsolute {
+    margin: auto;
+    width: 540px;
+    height: 80px;
+    padding: 20px;
+    position: absolute;
+    border-radius: 4px;
+    background-color: white;
+    left: 0;
+    right: 0;
+}
+.closeSymbol {
+    font-size: 4ch;
+    right: -9px;
+    top: -24px;
+    position: absolute;
+}
+.transparent {
+    background: #848484;
+    height: 100%;
+    opacity: 0.9;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    top: 0;
+    left: 0;
 }
