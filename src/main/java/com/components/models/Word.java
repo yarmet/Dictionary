@@ -21,6 +21,9 @@ public class Word {
     @Column(name = "english")
     private String english;
 
+    @Column(name = "user_id")
+    private long userId;
+
     @Column(name = "date")
     private Date date;
 }
