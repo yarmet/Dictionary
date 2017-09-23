@@ -1,4 +1,5 @@
 const app = document.getElementById("programm");
+
 const rootPath = document.getElementById("rootPath").innerText;
 
 var Languages = {RUSSIAN: "русский", ENGLISH: 'english'};
@@ -9,23 +10,46 @@ class MyNavbar extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {logged: false};
         this.adminModeToggle = this.adminModeToggle.bind(this);
+        this.logout = this.logout.bind(this);
+    }
+
+    componentDidMount() {
+        ajax('/userIsLogged', 'POST', null, true).then(function (ans) {
+            this.setState({logged: JSON.parse(ans)});
+        }.bind(this));
     }
 
     adminModeToggle() {
         this.props.callback();
     }
 
+    logout() {
+        ajax('/logout', 'POST', null, true).then(function () {
+            window.location.href = "/login";
+        });
+    }
+
     render() {
         return <nav className="navbar navbar-default">
             <div className="container-fluid">
-                <div className="nav navbar-nav">
-                    <div className="navbar-brand"><a onClick={this.adminModeToggle} href="javascript:void(0);">админка(открыть/закрыть)</a>
-                    </div>
-                </div>
+
+                {
+                    this.state.logged ?
+                        <div className="nav navbar-nav">
+                            <div className="navbar-brand">
+                                <a onClick={this.adminModeToggle}
+                                   href="javascript:void(0);">админка(открыть/закрыть)</a>
+                            </div>
+                        </div> : null
+                }
                 <div className="nav navbar-nav navbar-right">
-                    <div className="navbar-brand"><a href="<c:url value='/login'/>">войти</a>
-                    </div>
+                    {
+                        this.state.logged ?
+                            <div className="navbar-brand"><a onClick={this.logout} href="#">выйти</a></div> :
+                            <div className="navbar-brand"><a href={rootPath.concat("/login")}>войти</a></div>
+                    }
                 </div>
             </div>
         </nav>
@@ -38,10 +62,10 @@ class RadioBlock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {selected: this.props.deffCheck};
-        this.clickRadio = this.clickRadio.bind(this);
+        this.click = this.click.bind(this);
     }
 
-    clickRadio(e) {
+    click(e) {
         var selectValue = e.target.value;
         this.setState({selected: selectValue});
         this.props.callback(selectValue);
@@ -54,7 +78,7 @@ class RadioBlock extends React.Component {
                     return <label key={id}><input type="radio" name={this.props.name}
                                                   value={row}
                                                   checked={row === this.state.selected}
-                                                  onChange={this.clickRadio}/>{row}</label>
+                                                  onChange={this.click}/>{row}</label>
                 }, this)
             }
         </div>
@@ -92,11 +116,12 @@ class EditBlock extends React.Component {
     }
 
     getResult() {
-        this.props.callback(this.props.values.arrayId, this.props.values.id, this.refs.rus.value, this.refs.eng.value)
+        var row = {id: this.props.values.id, russian: this.refs.rus.value, english: this.refs.eng.value};
+        this.props.callback(this.props.values.arrayId, row)
     }
 
     closeBlock() {
-        this.props.callback(null, null, null, null)
+        this.props.callback(null, null);
     }
 
     render() {
@@ -187,19 +212,18 @@ class ManageTd extends React.Component {
 
     constructor(props) {
         super(props);
-        this.func = this.func.bind(this);
+        this.click = this.click.bind(this);
         this.drawTdIfNeed = this.drawTdIfNeed.bind(this);
         this.drawUrlIfNeed = this.drawUrlIfNeed.bind(this);
-
     }
 
-    func(row, arrayId) {
+    click(row, arrayId) {
         this.props.callBack(row, arrayId);
     }
 
     drawUrlIfNeed() {
         return this.props.blocked ? <span>{this.props.children}</span> :
-            <a onClick={this.func.bind(null, this.props.row, this.props.arrayId)}
+            <a onClick={this.click.bind(null, this.props.row, this.props.arrayId)}
                href="#">{this.props.children}</a>
     }
 
@@ -230,6 +254,7 @@ class Block extends React.Component {
             loadSelected: LoadOptions.ALL,
 
             admin: false,
+            count: 0,
 
             blocked: false,
             editBlock: {show: false},
@@ -262,9 +287,17 @@ class Block extends React.Component {
         this.setState({loadSelected: value})
     }
 
-    loadMore() {
-        ajax(rootPath.concat('/getWords'), 'GET', null).then(function (rows) {
+    componentDidMount() {
+        ajax('/getWords', 'GET', null, true).then(function (rows) {
             this.setState({rows: JSON.parse(rows)});
+        }.bind(this));
+    }
+
+    loadMore() {
+        ajax('/getWords', 'GET', null, true).then(function (rows) {
+            var arr = JSON.parse(rows);
+            var tmp = this.state.count;
+            this.setState({rows: arr, count: tmp + arr.length});
         }.bind(this));
     }
 
@@ -275,11 +308,12 @@ class Block extends React.Component {
         });
     }
 
-    editBlockResult(arrayId, rowId, rus, eng) {
-        // если все ок, то
-        var arr = this.state.rows;
-        arr[arrayId] = {id: rowId, russian: rus, english: eng};
-        this.setState({rows: arr, blocked: false, editBlock: {show: false}});
+    editBlockResult(arrayId, row) {
+        ajax('/editWord', 'POST', JSON.stringify(row), true).then(function (row) {
+            var arr = this.state.rows;
+            arr[arrayId] = JSON.parse(row);
+            this.setState({rows: arr, blocked: false, editBlock: {show: false}});
+        }.bind(this));
     }
 
 
@@ -356,7 +390,7 @@ class Block extends React.Component {
                 <tbody>
                 {
                     this.state.rows.map(function (row, arrayID) {
-                        return <tr key={row.id}>
+                        return <tr key={this.state.count + arrayID}>
                             <td>{this.state.radioDeffCheck === Languages.RUSSIAN ? row.russian : row.english}</td>
 
                             <HiddenTd>{this.state.radioDeffCheck === Languages.RUSSIAN ? row.english : row.russian}</HiddenTd>
@@ -366,7 +400,6 @@ class Block extends React.Component {
 
                             <ManageTd admin={this.state.admin} blocked={this.state.blocked} row={row}
                                       arrayId={arrayID} callBack={this.openRemoveBlock}>уд.</ManageTd>
-
                         </tr>
                     }, this)
                 }

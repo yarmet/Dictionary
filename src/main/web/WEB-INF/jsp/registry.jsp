@@ -46,6 +46,9 @@
 
             <form:form method="POST" modelAttribute="userForm" class="form-signin">
                 <h2 class="form-signin-heading">Зарегистрироваться</h2>
+
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                 <spring:bind path="username">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="username" class="form-control" placeholder="Username"

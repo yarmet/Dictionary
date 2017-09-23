@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-lg-4 col-lg-offset-4">
             <form action="<c:url value='/login'/>" method='POST'>
-                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                 <div class="form-group has-error">
                     <label for="login">Логин</label>

@@ -29,28 +29,27 @@ public class WordController {
     }
 
 
-    // удалить, не нужно
+
     @Deprecated
-    @RequestMapping(value = "getUserRoles", method = RequestMethod.POST)
+    @RequestMapping(value = "userIsLogged", method = RequestMethod.POST)
     public ResponseEntity<?> roles() {
-        return ResponseEntity.ok(Utils.getUserRoles());
+        return ResponseEntity.ok(Utils.userIsLogged());
     }
 
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "addWord", method = RequestMethod.POST)
     public ResponseEntity<?> addWord(@RequestBody Word word) {
         wordsService.save(word);
         return ResponseEntity.ok().build();
     }
 
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "editWord", method = RequestMethod.POST)
     public ResponseEntity<?> editWord(@RequestBody Word word) {
-        wordsService.update(word);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(wordsService.update(word));
     }
 
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "deleteWord", method = RequestMethod.POST)
     public ResponseEntity<?> deleteWord(@RequestBody Word word) {
         wordsService.delete(word);

@@ -20,10 +20,13 @@
 </head>
 
 <body>
-<div id="rootPath"  style="display: none">${contextPath}</div>
+
+<div style="display: none">
+    <div id="rootPath">${contextPath}</div>
+    <div id="csrfToken">${_csrf.token}</div>
+</div>
 
 <div id="programm"></div>
-
 
 <script src="${contextPath}/res/js/ajax.js"></script>
 <script type="text/babel" src="${contextPath}/res/js/index.js"></script>

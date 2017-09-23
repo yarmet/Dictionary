@@ -1,10 +1,12 @@
+const rootPath = document.getElementById("rootPath").innerText;
+const csrfToken = document.getElementById("csrfToken").innerText;
 
 
-
-function ajax(url, type, json) {
+function ajax(url, type, json, async) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
-        xhr.open(type, url, true);
+        xhr.open(type, rootPath.concat(url), async);
+        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         xhr.send(json);
 
