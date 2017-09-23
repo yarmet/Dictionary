@@ -34,13 +34,13 @@ class MyNavbar extends React.Component {
 
     drawAdminOptIfneed() {
         return this.state.logged ? <div className="navbar-brand">
-            <a onClick={this.adminModeToggle} href="#">админка(открыть/закрыть)</a>
+            <a onClick={this.adminModeToggle} href="javascript:void(0);">админка(открыть/закрыть)</a>
         </div> : null
     }
 
     drawLoginOrLogout() {
         return this.state.logged ?
-            <div className="navbar-brand"><a onClick={this.logout} href="#">выйти</a></div> :
+            <div className="navbar-brand"><a onClick={this.logout} href="javascript:void(0);">выйти</a></div> :
             <div className="navbar-brand"><a href={rootPath.concat("/login")}>войти</a></div>;
     }
 
@@ -103,7 +103,7 @@ class HiddenTd extends React.Component {
 
     render() {
         return (
-            <td> {this.state.hidden ? <a onClick={this.click} href="#">показать</a> : this.props.children} </td>
+            <td> {this.state.hidden ? <a onClick={this.click} href="javascript:void(0);">показать</a> : this.props.children} </td>
         )
     }
 }
@@ -135,7 +135,7 @@ class EditBlock extends React.Component {
 
         if (this.props.values.show) {
             display = <div className="positionAbsolute form-inline">
-                <div className="closeSymbol"><a onClick={this.closeBlock} href="#">&times;</a></div>
+                <div className="closeSymbol"><a onClick={this.closeBlock} href="javascript:void(0);">&times;</a></div>
                 <input className="form-control" ref="eng" placeholder={Languages.ENGLISH}
                        defaultValue={this.props.values.eng}/>
 
@@ -171,7 +171,7 @@ class RemoveBlock extends React.Component {
         var display = null;
         if (this.props.values.show) {
             display = <div className="positionAbsolute form-inline">
-                <div className="closeSymbol"><a onClick={this.closeBlock} href="#">&times;</a></div>
+                <div className="closeSymbol"><a onClick={this.closeBlock} href="javascript:void(0);">&times;</a></div>
                 <button className="btn btn-danger" onClick={this.getResult}>уверены что хотите удалить?</button>
             </div>
         }
@@ -201,7 +201,7 @@ class AddBlock extends React.Component {
         var display = null;
         if (this.props.show) {
             display = <div className="positionAbsolute form-inline">
-                <div className="closeSymbol"><a onClick={this.closeBlock} href="#">&times;</a></div>
+                <div className="closeSymbol"><a onClick={this.closeBlock} href="javascript:void(0);">&times;</a></div>
                 <input className="form-control" ref="eng" placeholder={Languages.ENGLISH}/>
                 <input className="form-control" ref="rus" placeholder={Languages.RUSSIAN}/>
                 <button className="btn btn-danger" onClick={this.getResult}>добавить</button>
@@ -228,7 +228,7 @@ class ManageTd extends React.Component {
     drawUrlIfNeed() {
         return this.props.urlsBlocked ? <span>{this.props.children}</span> :
             <a onClick={this.click.bind(null, this.props.row, this.props.arrayId)}
-               href="#">{this.props.children}</a>
+               href="javascript:void(0);">{this.props.children}</a>
     }
 
     drawTdIfNeed() {
@@ -392,7 +392,7 @@ class Block extends React.Component {
                     <td> {this.state.radioDeffCheck} </td>
                     <td> {this.state.radioDeffCheck === Languages.RUSSIAN ? Languages.ENGLISH : Languages.RUSSIAN} </td>
                     {this.state.admin ?
-                        <td colSpan="2"><a href="#" onClick={this.openAddBlock}>добавить слово</a></td> : null}
+                        <td colSpan="2"><a href="javascript:void(0);" onClick={this.openAddBlock}>добавить слово</a></td> : null}
                 </tr>
                 </thead>
 

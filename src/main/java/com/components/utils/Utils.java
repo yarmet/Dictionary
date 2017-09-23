@@ -24,6 +24,21 @@ public class Utils {
         return Timestamp.valueOf(ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime());
     }
 
+//       java 7
+//    public static Timestamp getCurrentTimestampAsUTC() {
+//        Timestamp timestamp = null;
+//        String DATE_FORMAT = "yyyy.MM.dd.HH.mm.ss";
+//        SimpleDateFormat dateFormatGmt = new SimpleDateFormat(DATE_FORMAT);
+//        dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        SimpleDateFormat dateFormatLocal = new SimpleDateFormat(DATE_FORMAT);
+//        try {
+//            timestamp = new Timestamp(dateFormatLocal.parse(dateFormatGmt.format(new Date())).getTime());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return timestamp;
+//    }
+
 
     public static String getCurrentUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
