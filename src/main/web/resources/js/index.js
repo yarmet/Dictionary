@@ -39,8 +39,7 @@ class MyNavbar extends React.Component {
                     this.state.logged ?
                         <div className="nav navbar-nav">
                             <div className="navbar-brand">
-                                <a onClick={this.adminModeToggle}
-                                   href="javascript:void(0);">админка(открыть/закрыть)</a>
+                                <a onClick={this.adminModeToggle} href="#">админка(открыть/закрыть)</a>
                             </div>
                         </div> : null
                 }
@@ -154,11 +153,11 @@ class RemoveBlock extends React.Component {
     }
 
     getResult() {
-        this.props.callback(true, this.props.values.id, this.props.values.arrayId);
+        this.props.callback(this.props.values.id, this.props.values.arrayId);
     }
 
     closeBlock() {
-        this.props.callback(false)
+        this.props.callback(null, null)
     }
 
     render() {
@@ -294,7 +293,7 @@ class Block extends React.Component {
     }
 
     loadMore() {
-        ajax('/getWords', 'GET', null, true).then(function (rows) {
+        ajax(this.state.loadSelected === LoadOptions.LAST ? '/getLastWords' : '/getWords', 'GET', null, true).then(function (rows) {
             var arr = JSON.parse(rows);
             var tmp = this.state.count;
             this.setState({rows: arr, count: tmp + arr.length});
@@ -309,13 +308,16 @@ class Block extends React.Component {
     }
 
     editBlockResult(arrayId, row) {
-        ajax('/editWord', 'POST', JSON.stringify(row), true).then(function (row) {
-            var arr = this.state.rows;
-            arr[arrayId] = JSON.parse(row);
-            this.setState({rows: arr, blocked: false, editBlock: {show: false}});
-        }.bind(this));
+        if (arrayId === null || row === null) {
+            this.setState({blocked: false, editBlock: {show: false}});
+        } else {
+            ajax('/editWord', 'POST', JSON.stringify(row), true).then(function (row) {
+                var arr = this.state.rows;
+                arr[arrayId] = JSON.parse(row);
+                this.setState({rows: arr, blocked: false, editBlock: {show: false}});
+            }.bind(this));
+        }
     }
-
 
     openAddBlock() {
         this.setState({addBlock: {show: true}, blocked: true});
@@ -323,11 +325,15 @@ class Block extends React.Component {
 
     openAddBlockResult(rus, eng) {
         if (rus !== null && eng !== null) {
-            // если все ок, то
-            var arr = this.state.rows;
-            arr.push({id: "new id", russian: rus, english: eng});
+            ajax('/addWord', 'POST', JSON.stringify({russian: rus, english: eng}), true).then(function (row) {
+                var arr = this.state.rows;
+                row = JSON.parse(row);
+                arr.push({id: row.id, russian: row.russian, english: row.english});
+                this.setState({rows: arr, blocked: false, addBlock: {show: false}});
+            }.bind(this));
+        } else {
+            this.setState({addBlock: {show: false}, blocked: false});
         }
-        this.setState({addBlock: {show: false}, blocked: false});
     }
 
 
@@ -335,13 +341,17 @@ class Block extends React.Component {
         this.setState({removeBlock: {show: true, arrayId: arrayId, id: row.id}, blocked: true})
     }
 
-    openRemoveBlockresult(decide, rowId, arrayId) {
-        if (decide) {
-            // если все ок
-            var arr = this.state.rows;
-            arr.splice(arrayId, 1);
+    openRemoveBlockresult(rowId, arrayId) {
+        if (rowId !== null && arrayId !== null) {
+            ajax('/deleteWord', 'POST', JSON.stringify({id: rowId}), true).then(function () {
+                var arr = this.state.rows;
+                arr.splice(arrayId, 1);
+                this.setState({blocked: false, rows: arr, removeBlock: {show: false}})
+            }.bind(this));
+        } else {
+            this.setState({blocked: false, removeBlock: {show: false}})
         }
-        this.setState({blocked: false, removeBlock: {show: false}})
+
     }
 
     adminModeToggle() {
@@ -351,13 +361,11 @@ class Block extends React.Component {
 
 
     render() {
-
         if (this.state.blocked) {
             document.body.classList.add('transparent');
         } else {
             document.body.classList.remove('transparent');
         }
-
         return <div>
             <MyNavbar callback={this.adminModeToggle} admin={this.props.admin}/>
 
