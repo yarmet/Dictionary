@@ -31,19 +31,13 @@ public class WordController {
         return ResponseEntity.ok(wordsService.getLastRandomWords());
     }
 
-
-    @Deprecated
-    @RequestMapping(value = "userIsLogged", method = RequestMethod.POST)
-    public ResponseEntity<?> roles() {
-        return ResponseEntity.ok(Utils.userIsLogged());
-    }
-
     @JsonView(View.Word.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "addWord", method = RequestMethod.POST)
     public ResponseEntity<?> addWord(@RequestBody com.components.models.Word word) {
         return ResponseEntity.ok(wordsService.save(word));
     }
+
 
     @JsonView(View.Word.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
@@ -52,12 +46,14 @@ public class WordController {
         return ResponseEntity.ok(wordsService.update(word));
     }
 
+
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "deleteWord", method = RequestMethod.POST)
     public ResponseEntity<?> deleteWord(@RequestBody com.components.models.Word word) {
         wordsService.delete(word);
         return ResponseEntity.ok().build();
     }
+
 
 
 }

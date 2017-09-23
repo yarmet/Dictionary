@@ -4,14 +4,6 @@ body {
     background: url("../img/bg.png");
 }
 
-h2 {
-    text-align: center;
-}
-
-.input_block {
-    margin: 10px;
-}
-
 table {
     margin: auto;
     border-collapse: collapse;
@@ -57,10 +49,13 @@ a, p {
 }
 
 .closeSymbol {
-    font-size: 4ch;
     right: -9px;
     top: -24px;
     position: absolute;
+}
+
+.closeSymbol > * {
+    font-size: 4ch;
 }
 
 .transparent {

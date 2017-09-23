@@ -13,6 +13,7 @@ class MyNavbar extends React.Component {
         this.state = {logged: false};
         this.adminModeToggle = this.adminModeToggle.bind(this);
         this.logout = this.logout.bind(this);
+        this.drawAdminOptIfneed = this.drawAdminOptIfneed.bind(this);
     }
 
     componentDidMount() {
@@ -31,23 +32,26 @@ class MyNavbar extends React.Component {
         });
     }
 
+    drawAdminOptIfneed() {
+        return this.state.logged ? <div className="navbar-brand">
+            <a onClick={this.adminModeToggle} href="#">админка(открыть/закрыть)</a>
+        </div> : null
+    }
+
+    drawLoginOrLogout() {
+        return this.state.logged ?
+            <div className="navbar-brand"><a onClick={this.logout} href="#">выйти</a></div> :
+            <div className="navbar-brand"><a href={rootPath.concat("/login")}>войти</a></div>;
+    }
+
     render() {
         return <nav className="navbar navbar-inverse">
             <div className="container-fluid">
-                {
-                    this.state.logged ?
-                        <div className="nav navbar-nav">
-                            <div className="navbar-brand">
-                                <a onClick={this.adminModeToggle} href="#">админка(открыть/закрыть)</a>
-                            </div>
-                        </div> : null
-                }
+                <div className="nav navbar-nav">
+                    {this.drawAdminOptIfneed()}
+                </div>
                 <div className="nav navbar-nav navbar-right">
-                    {
-                        this.state.logged ?
-                            <div className="navbar-brand"><a onClick={this.logout} href="#">выйти</a></div> :
-                            <div className="navbar-brand"><a href={rootPath.concat("/login")}>войти</a></div>
-                    }
+                    {this.drawLoginOrLogout()}
                 </div>
             </div>
         </nav>
@@ -173,7 +177,6 @@ class RemoveBlock extends React.Component {
         }
         return display;
     }
-
 }
 
 //------------------------------------------------------------------------------------------------------------------
@@ -209,7 +212,6 @@ class AddBlock extends React.Component {
 }
 
 //------------------------------------------------------------------------------------------------------------------
-
 class ManageTd extends React.Component {
 
     constructor(props) {
@@ -244,7 +246,6 @@ class Block extends React.Component {
 
     constructor(props) {
         super(props);
-
 
         this.state = {
             rows: [],
@@ -353,7 +354,6 @@ class Block extends React.Component {
         } else {
             this.setState({urlsBlocked: false, removeBlock: {show: false}})
         }
-
     }
 
     adminModeToggle() {
