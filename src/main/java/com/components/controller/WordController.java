@@ -19,6 +19,12 @@ public class WordController {
     @Autowired
     private WordsService wordsService;
 
+
+    @RequestMapping(value = "userIsLogged", method = RequestMethod.POST)
+    public ResponseEntity<?> roles() {
+        return ResponseEntity.ok(Utils.userIsLogged());
+    }
+
     @JsonView(View.Word.class)
     @RequestMapping(value = "/getWords", method = RequestMethod.GET)
     public ResponseEntity<?> getWords() {
@@ -53,7 +59,5 @@ public class WordController {
         wordsService.delete(word);
         return ResponseEntity.ok().build();
     }
-
-
 
 }
