@@ -12,7 +12,7 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <link href="${contextPath}/res/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/res/css/style.css" rel="stylesheet">
+    <link href="${contextPath}/res/css/index.css" rel="stylesheet">
 
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>

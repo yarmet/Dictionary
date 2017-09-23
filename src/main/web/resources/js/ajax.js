@@ -1,7 +1,6 @@
 const rootPath = document.getElementById("rootPath").innerText;
 const csrfToken = document.getElementById("csrfToken").innerText;
 
-
 function ajax(url, type, json, async) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -25,10 +24,3 @@ function ajax(url, type, json, async) {
         };
     });
 }
-
-
-// ajax('http://localhost:8080/getWords', 'GET', null).then(function (resolve) {
-//     console.log("ответ : " + resolve)
-// }, function (error) {
-//     console.log("ошибка " + error)
-// });

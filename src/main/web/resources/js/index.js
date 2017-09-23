@@ -32,9 +32,8 @@ class MyNavbar extends React.Component {
     }
 
     render() {
-        return <nav className="navbar navbar-default">
+        return <nav className="navbar navbar-inverse">
             <div className="container-fluid">
-
                 {
                     this.state.logged ?
                         <div className="nav navbar-nav">
@@ -115,8 +114,12 @@ class EditBlock extends React.Component {
     }
 
     getResult() {
-        var row = {id: this.props.values.id, russian: this.refs.rus.value, english: this.refs.eng.value};
-        this.props.callback(this.props.values.arrayId, row)
+        this.props.callback(this.props.values.arrayId,
+            {
+                id: this.props.values.id,
+                russian: this.refs.rus.value,
+                english: this.refs.eng.value
+            })
     }
 
     closeBlock() {
@@ -221,7 +224,7 @@ class ManageTd extends React.Component {
     }
 
     drawUrlIfNeed() {
-        return this.props.blocked ? <span>{this.props.children}</span> :
+        return this.props.urlsBlocked ? <span>{this.props.children}</span> :
             <a onClick={this.click.bind(null, this.props.row, this.props.arrayId)}
                href="#">{this.props.children}</a>
     }
@@ -255,14 +258,14 @@ class Block extends React.Component {
             admin: false,
             count: 0,
 
-            blocked: false,
+            urlsBlocked: false,
             editBlock: {show: false},
             addBlock: {show: false},
             removeBlock: {show: false}
         };
 
         this.radioResult = this.radioResult.bind(this);
-        this.loadMore = this.loadMore.bind(this);
+        this.loadWords = this.loadWords.bind(this);
 
         this.openEditBlock = this.openEditBlock.bind(this);
         this.editBlockResult = this.editBlockResult.bind(this);
@@ -292,35 +295,34 @@ class Block extends React.Component {
         }.bind(this));
     }
 
-    loadMore() {
+    loadWords() {
         ajax(this.state.loadSelected === LoadOptions.LAST ? '/getLastWords' : '/getWords', 'GET', null, true).then(function (rows) {
             var arr = JSON.parse(rows);
-            var tmp = this.state.count;
-            this.setState({rows: arr, count: tmp + arr.length});
+            this.setState({rows: arr, count: this.state.count + arr.length});
         }.bind(this));
     }
 
     openEditBlock(row, arrayID) {
         this.setState({
             editBlock: {show: true, arrayId: arrayID, id: row.id, rus: row.russian, eng: row.english},
-            blocked: true
+            urlsBlocked: true
         });
     }
 
     editBlockResult(arrayId, row) {
         if (arrayId === null || row === null) {
-            this.setState({blocked: false, editBlock: {show: false}});
+            this.setState({urlsBlocked: false, editBlock: {show: false}});
         } else {
             ajax('/editWord', 'POST', JSON.stringify(row), true).then(function (row) {
                 var arr = this.state.rows;
                 arr[arrayId] = JSON.parse(row);
-                this.setState({rows: arr, blocked: false, editBlock: {show: false}});
+                this.setState({rows: arr, urlsBlocked: false, editBlock: {show: false}});
             }.bind(this));
         }
     }
 
     openAddBlock() {
-        this.setState({addBlock: {show: true}, blocked: true});
+        this.setState({addBlock: {show: true}, urlsBlocked: true});
     }
 
     openAddBlockResult(rus, eng) {
@@ -329,16 +331,16 @@ class Block extends React.Component {
                 var arr = this.state.rows;
                 row = JSON.parse(row);
                 arr.push({id: row.id, russian: row.russian, english: row.english});
-                this.setState({rows: arr, blocked: false, addBlock: {show: false}});
+                this.setState({rows: arr, urlsBlocked: false, addBlock: {show: false}});
             }.bind(this));
         } else {
-            this.setState({addBlock: {show: false}, blocked: false});
+            this.setState({addBlock: {show: false}, urlsBlocked: false});
         }
     }
 
 
     openRemoveBlock(row, arrayId) {
-        this.setState({removeBlock: {show: true, arrayId: arrayId, id: row.id}, blocked: true})
+        this.setState({removeBlock: {show: true, arrayId: arrayId, id: row.id}, urlsBlocked: true})
     }
 
     openRemoveBlockresult(rowId, arrayId) {
@@ -346,22 +348,21 @@ class Block extends React.Component {
             ajax('/deleteWord', 'POST', JSON.stringify({id: rowId}), true).then(function () {
                 var arr = this.state.rows;
                 arr.splice(arrayId, 1);
-                this.setState({blocked: false, rows: arr, removeBlock: {show: false}})
+                this.setState({urlsBlocked: false, rows: arr, removeBlock: {show: false}})
             }.bind(this));
         } else {
-            this.setState({blocked: false, removeBlock: {show: false}})
+            this.setState({urlsBlocked: false, removeBlock: {show: false}})
         }
 
     }
 
     adminModeToggle() {
-        var adm = this.state.admin;
-        this.setState({admin: !adm})
+        this.setState({admin: !this.state.admin})
     }
 
 
     render() {
-        if (this.state.blocked) {
+        if (this.state.urlsBlocked) {
             document.body.classList.add('transparent');
         } else {
             document.body.classList.remove('transparent');
@@ -369,7 +370,7 @@ class Block extends React.Component {
         return <div>
             <MyNavbar callback={this.adminModeToggle} admin={this.props.admin}/>
 
-            <h3>словарик</h3>
+            <h3>Словарик</h3>
 
             <RadioBlock name="loadOpt" values={this.state.loadValues} deffCheck={this.state.loadSelected}
                         callback={this.loadOptionResult}/>
@@ -381,8 +382,8 @@ class Block extends React.Component {
             <AddBlock callback={this.openAddBlockResult} show={this.state.addBlock.show}/>
             <RemoveBlock callback={this.openRemoveBlockresult} values={this.state.removeBlock}/>
 
-            <div>
-                <button className="btn btn-danger" onClick={this.loadMore}>загрузить</button>
+            <div id="loadBtn">
+                <button className="btn btn-default" onClick={this.loadWords}>загрузить</button>
             </div>
 
             <table>
@@ -403,10 +404,10 @@ class Block extends React.Component {
 
                             <HiddenTd>{this.state.radioDeffCheck === Languages.RUSSIAN ? row.english : row.russian}</HiddenTd>
 
-                            <ManageTd admin={this.state.admin} blocked={this.state.blocked} row={row}
+                            <ManageTd admin={this.state.admin} blocked={this.state.urlsBlocked} row={row}
                                       arrayId={arrayID} callBack={this.openEditBlock}>ред.</ManageTd>
 
-                            <ManageTd admin={this.state.admin} blocked={this.state.blocked} row={row}
+                            <ManageTd admin={this.state.admin} blocked={this.state.urlsBlocked} row={row}
                                       arrayId={arrayID} callBack={this.openRemoveBlock}>уд.</ManageTd>
                         </tr>
                     }, this)
