@@ -26,7 +26,10 @@
     <div id="csrfToken">${_csrf.token}</div>
 </div>
 
-<div id="programm"></div>
+<section class="container">
+    <div id="programm"></div>
+</section>
+
 
 <script src="${contextPath}/res/js/ajax.js"></script>
 <script type="text/babel" src="${contextPath}/res/js/index.js"></script>
