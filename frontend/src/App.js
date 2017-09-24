@@ -36,30 +36,18 @@ class Block extends Component {
             removeBlock: {show: false}
         };
 
-        this.radioResult = this.radioResult.bind(this);
         this.loadWords = this.loadWords.bind(this);
 
         this.openEditBlock = this.openEditBlock.bind(this);
         this.editBlockResult = this.editBlockResult.bind(this);
 
-        this.adminModeToggle = this.adminModeToggle.bind(this);
-
-        this.openAddBlock = this.openAddBlock.bind(this);
         this.openAddBlockResult = this.openAddBlockResult.bind(this);
 
         this.openRemoveBlock = this.openRemoveBlock.bind(this);
         this.openRemoveBlockresult = this.openRemoveBlockresult.bind(this);
 
-        this.loadOptionResult = this.loadOptionResult.bind(this);
     }
 
-    radioResult(value) {
-        this.setState({radioDeffCheck: value})
-    }
-
-    loadOptionResult(value) {
-        this.setState({loadSelected: value})
-    }
 
     componentDidMount() {
         ajax('/getWords', 'GET', null, true).then(function (rows) {
@@ -93,9 +81,6 @@ class Block extends Component {
         }
     }
 
-    openAddBlock() {
-        this.setState({addBlock: {show: true}, urlsBlocked: true});
-    }
 
     openAddBlockResult(rus, eng) {
         if (rus !== null && eng !== null) {
@@ -127,9 +112,7 @@ class Block extends Component {
         }
     }
 
-    adminModeToggle() {
-        this.setState({admin: !this.state.admin})
-    }
+
 
 
     render() {
@@ -141,15 +124,17 @@ class Block extends Component {
         }
 
         return <div>
-            <Navbar callback={this.adminModeToggle} admin={this.props.admin}/>
+            <Navbar callback={ ()=>{this.setState({admin: !this.state.admin})} } admin={this.props.admin}/>
 
             <h3>Словарик</h3>
 
             <RadioBlock name="loadOpt" values={this.state.loadValues} deffCheck={this.state.loadSelected}
-                        callback={this.loadOptionResult}/>
+                        callback={(value) => {
+                            this.setState({loadSelected: value})
+                        }}/>
 
             <RadioBlock name="langChoice" values={this.state.radioValues} deffCheck={this.state.radioDeffCheck}
-                        callback={this.radioResult}/>
+                        callback={  (value) => { this.setState({radioDeffCheck: value}) }  }/>
 
             <EditBlock callback={this.editBlockResult} values={this.state.editBlock}/>
             <AddBlock callback={this.openAddBlockResult} show={this.state.addBlock.show}/>
@@ -166,8 +151,9 @@ class Block extends Component {
                     <td> {this.state.radioDeffCheck === Languages.RUSSIAN ? Languages.ENGLISH : Languages.RUSSIAN} </td>
                     {this.state.admin ?
                         <td colSpan="2">
-                            {this.state.urlsBlocked?<span>добавить слово</span>:
-                                <a href="javascript:void(0);" onClick={this.openAddBlock}>добавить слово</a> }
+                            {this.state.urlsBlocked ? <span>добавить слово</span> :
+                                <a href="javascript:void(0);"
+                                   onClick={() => {this.setState({addBlock: {show: true}, urlsBlocked: true})}}>добавить слово</a>}
                         </td> : null}
                 </tr>
                 </thead>

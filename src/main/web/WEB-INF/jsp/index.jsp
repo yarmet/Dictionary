@@ -28,7 +28,7 @@
     <div id="root"></div>
 </section>
 
-<script type="text/javascript" src="${contextPath}/res/js/main.30c27498.js"></script>
+<script type="text/javascript" src="${contextPath}/res/js/main.00d7bb0a.js"></script>
 </body>
 
 

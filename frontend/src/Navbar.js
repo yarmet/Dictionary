@@ -7,7 +7,6 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {logged: false};
-        this.adminModeToggle = this.adminModeToggle.bind(this);
         this.logout = this.logout.bind(this);
         this.drawAdminOptIfneed = this.drawAdminOptIfneed.bind(this);
     }
@@ -18,9 +17,7 @@ class Navbar extends Component {
         }.bind(this));
     }
 
-    adminModeToggle() {
-        this.props.callback();
-    }
+
 
     logout() {
         ajax('/logout', 'POST', null, true).then(function () {
@@ -30,7 +27,7 @@ class Navbar extends Component {
 
     drawAdminOptIfneed() {
         return this.state.logged ? <div className="navbar-brand">
-            <a onClick={this.adminModeToggle} href="javascript:void(0);">админка(открыть/закрыть)</a>
+            <a onClick={ ()=>{ this.props.callback()}  } href="javascript:void(0);">админка(открыть/закрыть)</a>
         </div> : null
     }
 

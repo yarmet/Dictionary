@@ -6,7 +6,6 @@ class EditBlock extends Component {
     constructor(props) {
         super(props);
         this.getResult = this.getResult.bind(this);
-        this.closeBlock = this.closeBlock.bind(this);
     }
 
     getResult() {
@@ -18,15 +17,12 @@ class EditBlock extends Component {
             })
     }
 
-    closeBlock() {
-        this.props.callback(null, null);
-    }
 
     render() {
         var display = null;
         if (this.props.values.show) {
             display = <div className="positionAbsolute form-inline">
-                <div className="closeSymbol"><a onClick={this.closeBlock} href="javascript:void(0);">&times;</a></div>
+                <div className="closeSymbol"><a onClick={ ()=>{  this.props.callback(null, null) } } href="javascript:void(0);">&times;</a></div>
                 <input className="form-control" ref="eng" placeholder={Languages.ENGLISH}
                        defaultValue={this.props.values.eng}/>
 
