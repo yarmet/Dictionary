@@ -14,7 +14,7 @@ class ManageTd extends Component {
     }
 
     drawUrlIfNeed() {
-        return this.props.urlsBlocked ? <span>{this.props.children}</span> :
+        return this.props.blocked ? <span>{this.props.children}</span> :
             <a onClick={this.click.bind(null, this.props.row, this.props.arrayId)}
                href="javascript:void(0);">{this.props.children}</a>
     }

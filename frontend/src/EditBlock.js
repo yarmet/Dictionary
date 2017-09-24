@@ -24,7 +24,6 @@ class EditBlock extends Component {
 
     render() {
         var display = null;
-
         if (this.props.values.show) {
             display = <div className="positionAbsolute form-inline">
                 <div className="closeSymbol"><a onClick={this.closeBlock} href="javascript:void(0);">&times;</a></div>

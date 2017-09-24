@@ -133,6 +133,13 @@ class Block extends Component {
 
 
     render() {
+
+        if (this.state.urlsBlocked) {
+            document.body.classList.add('transparent');
+        } else {
+            document.body.classList.remove('transparent');
+        }
+
         return <div>
             <Navbar callback={this.adminModeToggle} admin={this.props.admin}/>
 
@@ -158,7 +165,10 @@ class Block extends Component {
                     <td> {this.state.radioDeffCheck} </td>
                     <td> {this.state.radioDeffCheck === Languages.RUSSIAN ? Languages.ENGLISH : Languages.RUSSIAN} </td>
                     {this.state.admin ?
-                        <td colSpan="2"><a href="javascript:void(0);" onClick={this.openAddBlock}>добавить слово</a></td> : null}
+                        <td colSpan="2">
+                            {this.state.urlsBlocked?<span>добавить слово</span>:
+                                <a href="javascript:void(0);" onClick={this.openAddBlock}>добавить слово</a> }
+                        </td> : null}
                 </tr>
                 </thead>
 
@@ -169,7 +179,6 @@ class Block extends Component {
                             <td>{this.state.radioDeffCheck === Languages.RUSSIAN ? row.russian : row.english}</td>
 
                             <HiddenTd>{this.state.radioDeffCheck === Languages.RUSSIAN ? row.english : row.russian}</HiddenTd>
-
                             <ManageTd admin={this.state.admin} blocked={this.state.urlsBlocked} row={row}
                                       arrayId={arrayID} callBack={this.openEditBlock}>ред.</ManageTd>
 
