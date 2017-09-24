@@ -13,10 +13,6 @@
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <link href="${contextPath}/res/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/res/css/index.css" rel="stylesheet">
-
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
 </head>
 
 <body>
@@ -26,14 +22,14 @@
     <div id="csrfToken">${_csrf.token}</div>
 </div>
 
+<noscript>You need to enable JavaScript to run this app.</noscript>
+
 <section class="container">
-    <div id="programm"></div>
+    <div id="root"></div>
 </section>
 
-
-<script src="${contextPath}/res/js/ajax.js"></script>
-<script type="text/babel" src="${contextPath}/res/js/index.js"></script>
-
-
+<script type="text/javascript" src="${contextPath}/res/js/main.c846442a.js"></script>
 </body>
+
+
 </html>
