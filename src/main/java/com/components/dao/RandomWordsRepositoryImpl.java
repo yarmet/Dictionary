@@ -3,19 +3,15 @@ package com.components.dao;
 import com.components.models.User;
 import com.components.models.Word;
 import com.components.utils.Utils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-@Component
-class RandomWordsDaoImpl implements RandomWordsDao {
+@Repository
+class RandomWordsRepositoryImpl implements RandomWordsRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

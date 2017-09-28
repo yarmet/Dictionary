@@ -1,8 +1,8 @@
 package com.components.service;
 
-import com.components.dao.RandomWordsDao;
-import com.components.dao.UserDao;
-import com.components.dao.WordDao;
+import com.components.dao.RandomWordsRepository;
+import com.components.dao.UserRepository;
+import com.components.dao.WordRepository;
 import com.components.models.User;
 import com.components.models.Word;
 import com.components.utils.Utils;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import static com.components.utils.Utils.userIsLogged;
 
+
 @Service
 class WordsServiceImpl implements WordsService {
 
@@ -22,53 +23,53 @@ class WordsServiceImpl implements WordsService {
     private int wordCount;
 
     @Autowired
-    private WordDao wordDao;
+    private WordRepository wordRepository;
 
     @Autowired
-    private RandomWordsDao randomWordsDao;
+    private RandomWordsRepository randomWordsRepository;
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Override
     public Word save(Word word) {
         word.setDate(Utils.getCurrentTimestampAsUTC());
         word.setUserId(getLoggedUser().getId());
-        return wordDao.save(word);
+        return wordRepository.save(word);
     }
 
     @Override
     public Word update(Word word) {
-        Date date = wordDao.findOne(word.getId()).getDate();
+        Date date = wordRepository.findOne(word.getId()).getDate();
         word.setDate(date);
         word.setUserId(getLoggedUser().getId());
-        return wordDao.save(word);
+        return wordRepository.save(word);
     }
 
     @Override
     public void delete(Word word) {
-        wordDao.delete(word);
+        wordRepository.delete(word);
     }
 
     @Override
     public List<Word> getRandomWords() {
         return Utils.userIsLogged() ?
-                randomWordsDao.getRandomWordsForUser(getLoggedUser(), wordCount) :
-                randomWordsDao.getAllRandomWords(wordCount);
+                randomWordsRepository.getRandomWordsForUser(getLoggedUser(), wordCount) :
+                randomWordsRepository.getAllRandomWords(wordCount);
     }
 
 
     @Override
     public List<Word> getLastRandomWords() {
         return userIsLogged() ?
-                randomWordsDao.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
-                randomWordsDao.getAllLastRandomWords(wordCount);
+                randomWordsRepository.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
+                randomWordsRepository.getAllLastRandomWords(wordCount);
     }
 
 
     private User getLoggedUser() {
         String username = Utils.getCurrentUsername();
-        return userDao.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
 }

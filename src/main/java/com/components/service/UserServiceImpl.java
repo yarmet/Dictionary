@@ -1,7 +1,7 @@
 package com.components.service;
 
-import com.components.dao.RoleDao;
-import com.components.dao.UserDao;
+import com.components.dao.RoleRepository;
+import com.components.dao.UserRepository;
 import com.components.models.Role;
 import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,10 @@ class UserServiceImpl implements UserService {
     private static final Long ROLE_USER = 1L;
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -32,14 +32,14 @@ class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRegistrationDate(Utils.getCurrentTimestampAsUTC());
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getOne(ROLE_USER));
+        roles.add(roleRepository.getOne(ROLE_USER));
         user.setRoles(roles);
-        userDao.save(user);
+        userRepository.save(user);
     }
 
 
     @Override
     public User findByUserName(String userName) {
-        return userDao.findByUsername(userName);
+        return userRepository.findByUsername(userName);
     }
 }

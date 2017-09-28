@@ -4,7 +4,7 @@ import com.components.models.User;
 import com.components.models.Word;
 import java.util.List;
 
-public interface RandomWordsDao {
+public interface RandomWordsRepository {
 
     List<Word> getAllRandomWords(int wordCount);
 
