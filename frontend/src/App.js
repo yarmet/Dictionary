@@ -50,16 +50,16 @@ class Block extends Component {
 
 
     componentDidMount() {
-        ajax('/getWords', 'GET', null, true).then(function (rows) {
+        ajax('/getWords', 'GET', null, true).then((rows) => {
             this.setState({rows: JSON.parse(rows)});
-        }.bind(this));
+        });
     }
 
     loadWords() {
-        ajax(this.state.loadSelected === LoadOptions.LAST ? '/getLastWords' : '/getWords', 'GET', null, true).then(function (rows) {
+        ajax(this.state.loadSelected === LoadOptions.LAST ? '/getLastWords' : '/getWords', 'GET', null, true).then((rows) => {
             var arr = JSON.parse(rows);
             this.setState({rows: arr, count: this.state.count + arr.length});
-        }.bind(this));
+        });
     }
 
     openEditBlock(row, arrayID) {
@@ -73,23 +73,23 @@ class Block extends Component {
         if (arrayId === null || row === null) {
             this.setState({urlsBlocked: false, editBlock: {show: false}});
         } else {
-            ajax('/editWord', 'POST', JSON.stringify(row), true).then(function (row) {
+            ajax('/editWord', 'POST', JSON.stringify(row), true).then((row) => {
                 var arr = this.state.rows;
                 arr[arrayId] = JSON.parse(row);
                 this.setState({rows: arr, urlsBlocked: false, editBlock: {show: false}});
-            }.bind(this));
+            });
         }
     }
 
 
     openAddBlockResult(rus, eng) {
         if (rus !== null && eng !== null) {
-            ajax('/addWord', 'POST', JSON.stringify({russian: rus, english: eng}), true).then(function (row) {
+            ajax('/addWord', 'POST', JSON.stringify({russian: rus, english: eng}), true).then((row) => {
                 var arr = this.state.rows;
                 row = JSON.parse(row);
                 arr.push({id: row.id, russian: row.russian, english: row.english});
                 this.setState({rows: arr, urlsBlocked: false, addBlock: {show: false}});
-            }.bind(this));
+            });
         } else {
             this.setState({addBlock: {show: false}, urlsBlocked: false});
         }
@@ -102,17 +102,15 @@ class Block extends Component {
 
     openRemoveBlockresult(rowId, arrayId) {
         if (rowId !== null && arrayId !== null) {
-            ajax('/deleteWord', 'POST', JSON.stringify({id: rowId}), true).then(function () {
+            ajax('/deleteWord', 'POST', JSON.stringify({id: rowId}), true).then(() => {
                 var arr = this.state.rows;
                 arr.splice(arrayId, 1);
                 this.setState({urlsBlocked: false, rows: arr, removeBlock: {show: false}})
-            }.bind(this));
+            });
         } else {
             this.setState({urlsBlocked: false, removeBlock: {show: false}})
         }
     }
-
-
 
 
     render() {
@@ -124,7 +122,9 @@ class Block extends Component {
         }
 
         return <div>
-            <Navbar callback={ ()=>{this.setState({admin: !this.state.admin})} } admin={this.props.admin}/>
+            <Navbar callback={() => {
+                this.setState({admin: !this.state.admin})
+            }} admin={this.props.admin}/>
 
             <h3>Словарик</h3>
 
@@ -134,7 +134,9 @@ class Block extends Component {
                         }}/>
 
             <RadioBlock name="langChoice" values={this.state.radioValues} deffCheck={this.state.radioDeffCheck}
-                        callback={  (value) => { this.setState({radioDeffCheck: value}) }  }/>
+                        callback={(value) => {
+                            this.setState({radioDeffCheck: value})
+                        }}/>
 
             <EditBlock callback={this.editBlockResult} values={this.state.editBlock}/>
             <AddBlock callback={this.openAddBlockResult} show={this.state.addBlock.show}/>
@@ -153,14 +155,16 @@ class Block extends Component {
                         <td colSpan="2">
                             {this.state.urlsBlocked ? <span>добавить слово</span> :
                                 <a href="javascript:void(0);"
-                                   onClick={() => {this.setState({addBlock: {show: true}, urlsBlocked: true})}}>добавить слово</a>}
+                                   onClick={() => {
+                                       this.setState({addBlock: {show: true}, urlsBlocked: true})
+                                   }}>добавить слово</a>}
                         </td> : null}
                 </tr>
                 </thead>
 
                 <tbody>
                 {
-                    this.state.rows.map(function (row, arrayID) {
+                    this.state.rows.map((row, arrayID) => {
                         return <tr key={this.state.count + arrayID}>
                             <td>{this.state.radioDeffCheck === Languages.RUSSIAN ? row.russian : row.english}</td>
 
@@ -171,7 +175,7 @@ class Block extends Component {
                             <ManageTd admin={this.state.admin} blocked={this.state.urlsBlocked} row={row}
                                       arrayId={arrayID} callBack={this.openRemoveBlock}>уд.</ManageTd>
                         </tr>
-                    }, this)
+                    })
                 }
                 </tbody>
             </table>
