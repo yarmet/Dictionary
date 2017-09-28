@@ -28,7 +28,7 @@ class Navbar extends Component {
     drawAdminOptIfneed() {
         return this.state.logged ? <div className="navbar-brand">
             <a onClick={ ()=>{ this.props.callback()}  } href="javascript:void(0);">админка(открыть/закрыть)</a>
-        </div> : null
+        </div> : <p className="navbar-text">Для добавления своих слов, а также их редактирования/удаления, необходимо залогироваться</p>
     }
 
     drawLoginOrLogout() {
