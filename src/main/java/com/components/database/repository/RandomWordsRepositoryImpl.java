@@ -18,7 +18,7 @@ class RandomWordsRepositoryImpl implements RandomWordsRepository {
 
 
     @Transactional(readOnly = true)
-    public List<Word> getAllRandomWords(int wordCount) {
+    public List<Word> getAnyRandomWords(int wordCount) {
         Query query = entityManager.createQuery("select o from Word o order by rand()");
         query.setMaxResults(wordCount);
         return query.getResultList();
@@ -26,7 +26,7 @@ class RandomWordsRepositoryImpl implements RandomWordsRepository {
 
 
     @Transactional(readOnly = true)
-    public List<Word> getAllLastRandomWords(int wordCount) {
+    public List<Word> getLastRandomWords(int wordCount) {
         Query query = entityManager.createQuery("select o from Word o WHERE date >=:prevMonth  order by rand()");
         query.setParameter("prevMonth", Utils.getPreviousMonth());
         query.setMaxResults(wordCount);
@@ -34,7 +34,7 @@ class RandomWordsRepositoryImpl implements RandomWordsRepository {
     }
 
     @Override
-    public List<Word> getRandomWordsForUser(User user, int wordCount) {
+    public List<Word> getAnyRandomWordsForUser(User user, int wordCount) {
         Query query = entityManager.createQuery("select o from Word o WHERE userId=:userId order by rand()");
         query.setParameter("userId", user.getId());
         query.setMaxResults(wordCount);

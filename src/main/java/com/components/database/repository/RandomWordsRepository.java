@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface RandomWordsRepository {
 
-    List<Word> getAllRandomWords(int wordCount);
+    List<Word> getAnyRandomWords(int wordCount);
 
-    List<Word> getAllLastRandomWords(int wordCount);
+    List<Word> getLastRandomWords(int wordCount);
 
-    List<Word> getRandomWordsForUser(User user, int wordCount);
+    List<Word> getAnyRandomWordsForUser(User user, int wordCount);
 
     List<Word> getLastRandomWordsForUser(User user, int wordCount);
 

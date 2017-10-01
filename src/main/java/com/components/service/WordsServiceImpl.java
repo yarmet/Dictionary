@@ -54,8 +54,8 @@ class WordsServiceImpl implements WordsService {
     @Override
     public List<Word> getRandomWords() {
         return Utils.userIsLogged() ?
-                randomWordsRepository.getRandomWordsForUser(getLoggedUser(), wordCount) :
-                randomWordsRepository.getAllRandomWords(wordCount);
+                randomWordsRepository.getAnyRandomWordsForUser(getLoggedUser(), wordCount) :
+                randomWordsRepository.getAnyRandomWords(wordCount);
     }
 
 
@@ -63,7 +63,7 @@ class WordsServiceImpl implements WordsService {
     public List<Word> getLastRandomWords() {
         return userIsLogged() ?
                 randomWordsRepository.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
-                randomWordsRepository.getAllLastRandomWords(wordCount);
+                randomWordsRepository.getLastRandomWords(wordCount);
     }
 
 
