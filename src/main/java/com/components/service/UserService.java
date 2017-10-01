@@ -1,7 +1,7 @@
 package com.components.service;
 
 
-import com.components.models.User;
+import com.components.database.models.User;
 
 public interface UserService {
 

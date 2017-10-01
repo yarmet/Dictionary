@@ -1,7 +1,7 @@
-package com.components.dao;
+package com.components.database.repository;
 
-import com.components.models.User;
-import com.components.models.Word;
+import com.components.database.models.User;
+import com.components.database.models.Word;
 import com.components.utils.Utils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

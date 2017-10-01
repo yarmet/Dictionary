@@ -1,4 +1,4 @@
-package com.components.models;
+package com.components.database.models;
 
 
 import com.components.jacksonfilters.View;

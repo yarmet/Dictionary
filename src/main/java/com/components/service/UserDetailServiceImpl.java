@@ -1,8 +1,8 @@
 package com.components.service;
 
-import com.components.dao.UserRepository;
-import com.components.models.Role;
-import com.components.models.User;
+import com.components.database.repository.UserRepository;
+import com.components.database.models.Role;
+import com.components.database.models.User;
 import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

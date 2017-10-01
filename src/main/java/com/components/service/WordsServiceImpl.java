@@ -1,10 +1,10 @@
 package com.components.service;
 
-import com.components.dao.RandomWordsRepository;
-import com.components.dao.UserRepository;
-import com.components.dao.WordRepository;
-import com.components.models.User;
-import com.components.models.Word;
+import com.components.database.repository.RandomWordsRepository;
+import com.components.database.repository.UserRepository;
+import com.components.database.repository.WordRepository;
+import com.components.database.models.User;
+import com.components.database.models.Word;
 import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
-package com.components.dao;
+package com.components.database.repository;
 
-import com.components.models.Role;
+import com.components.database.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

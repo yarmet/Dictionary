@@ -1,7 +1,7 @@
-package com.components.dao;
+package com.components.database.repository;
 
 
-import com.components.models.User;
+import com.components.database.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

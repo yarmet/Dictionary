@@ -1,7 +1,7 @@
 package com.components.controller;
 
 
-import com.components.models.User;
+import com.components.database.models.User;
 import com.components.service.SecurityService;
 import com.components.service.UserService;
 import com.components.validator.UserValidator;

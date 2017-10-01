@@ -1,11 +1,11 @@
 package com.components.service;
 
-import com.components.dao.RoleRepository;
-import com.components.dao.UserRepository;
-import com.components.models.Role;
+import com.components.database.repository.RoleRepository;
+import com.components.database.repository.UserRepository;
+import com.components.database.models.Role;
 import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.components.models.User;
+import com.components.database.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -40,7 +40,7 @@ public class WordController {
     @JsonView(View.Word.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "addWord", method = RequestMethod.POST)
-    public ResponseEntity<?> addWord(@RequestBody com.components.models.Word word) {
+    public ResponseEntity<?> addWord(@RequestBody com.components.database.models.Word word) {
         return ResponseEntity.ok(wordsService.save(word));
     }
 
@@ -48,14 +48,14 @@ public class WordController {
     @JsonView(View.Word.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "editWord", method = RequestMethod.POST)
-    public ResponseEntity<?> editWord(@RequestBody com.components.models.Word word) {
+    public ResponseEntity<?> editWord(@RequestBody com.components.database.models.Word word) {
         return ResponseEntity.ok(wordsService.update(word));
     }
 
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "deleteWord", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteWord(@RequestBody com.components.models.Word word) {
+    public ResponseEntity<?> deleteWord(@RequestBody com.components.database.models.Word word) {
         wordsService.delete(word);
         return ResponseEntity.ok().build();
     }

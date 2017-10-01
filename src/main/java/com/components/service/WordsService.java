@@ -1,7 +1,7 @@
 package com.components.service;
 
 
-import com.components.models.Word;
+import com.components.database.models.Word;
 
 import java.util.List;
 
