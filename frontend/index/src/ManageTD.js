@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class ManageTd extends Component {
+class ManageTD extends Component {
 
     constructor(props) {
         super(props);
@@ -11,7 +11,7 @@ class ManageTd extends Component {
 
     drawUrlIfNeed() {
         return this.props.blocked ? <span>{this.props.children}</span> :
-            <a onClick={() => { this.props.callBack(this.props.row, this.props.arrayId) } }
+            <a onClick={() => this.props.callBack(this.props.row, this.props.arrayId)}
                href="javascript:void(0);">{this.props.children}</a>
     }
 
@@ -24,4 +24,4 @@ class ManageTd extends Component {
     }
 }
 
-export default ManageTd;
+export default ManageTD;

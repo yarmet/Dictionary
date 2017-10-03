@@ -3,12 +3,12 @@
 # dependencies
 /node_modules
 
-/.idea
 # testing
 /coverage
 
 # production
 /build
+/.idea
 
 # misc
 .DS_Store

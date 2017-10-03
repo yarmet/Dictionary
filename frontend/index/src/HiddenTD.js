@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-class HiddenTd extends Component {
+class HiddenTD extends Component {
 
     constructor(props) {
         super(props);
@@ -9,14 +9,14 @@ class HiddenTd extends Component {
     }
 
 
-
     render() {
         return (
             <td> {this.state.hidden ?
-                <a onClick={ ()=> {this.setState({hidden: false})} } href="javascript:void(0);">показать</a> : this.props.children} </td>
+                <a onClick={() => this.setState({hidden: false})}
+                   href="javascript:void(0);">показать</a> : this.props.children} </td>
         )
     }
 }
 
 
-export default HiddenTd;
+export default HiddenTD;

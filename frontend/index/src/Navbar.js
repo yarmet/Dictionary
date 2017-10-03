@@ -18,7 +18,6 @@ class Navbar extends Component {
     }
 
 
-
     logout() {
         ajax('/logout', 'POST', null, true).then(function () {
             window.location.href = "/login";
@@ -27,8 +26,9 @@ class Navbar extends Component {
 
     drawAdminOptIfneed() {
         return this.state.logged ? <div className="navbar-brand">
-            <a onClick={ ()=>{ this.props.callback()}  } href="javascript:void(0);">админка(открыть/закрыть)</a>
-        </div> : <p className="navbar-text">Для добавления своих слов, а также их редактирования/удаления, необходимо залогироваться</p>
+            <a onClick={() => this.props.callback()} href="javascript:void(0);">админка(открыть/закрыть)</a>
+        </div> : <p className="navbar-text">Для добавления своих слов, а также их редактирования/удаления, необходимо
+            залогироваться</p>
     }
 
     drawLoginOrLogout() {
