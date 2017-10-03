@@ -33,7 +33,7 @@ class Navbar extends Component {
 
     drawLoginOrLogout() {
         return this.state.logged ?
-            <div className="navbar-brand"><a onClick={this.logout} href="javascript:void(0);">выйти</a></div> :
+            <div className="navbar-brand"><a onClick={this.logout.bind(this)} href="javascript:void(0);">выйти</a></div> :
             <div className="navbar-brand"><a href="/login">войти</a></div>;
     }
 

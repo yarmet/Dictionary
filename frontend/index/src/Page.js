@@ -33,7 +33,15 @@ class Page extends Component {
 
     render() {
 
-        {this.counter += this.props.elements.length}
+        {
+            this.counter += this.props.elements.length
+
+            if (this.state.tableBlocked) {
+                document.body.classList.add('transparent');
+            } else {
+                document.body.classList.remove('transparent');
+            }
+        }
 
         return (
             <div>

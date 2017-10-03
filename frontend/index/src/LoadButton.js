@@ -20,7 +20,7 @@ class LoadButton extends Component {
 
     render() {
         return <div id="loadBtn">
-            <button className="btn btn-default shadow" onClick={this.loadWords}>нажать</button>
+            <button className="btn btn-default shadow" onClick={this.loadWords}>загрузить</button>
         </div>
     }
 }

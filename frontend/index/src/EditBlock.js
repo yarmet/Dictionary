@@ -21,9 +21,8 @@ class EditBlock extends Component {
         if (this.props.values.show) {
             display = <div className="positionAbsolute form-inline">
 
-                <div className="closeSymbol"><a onClick={() => {
-                    this.props.close()
-                }} href="javascript:void(0);">&times;</a></div>
+                <div className="closeSymbol"><a onClick={() => this.props.close()}
+                                                href="javascript:void(0);">&times;</a></div>
 
                 <input className="form-control" ref="eng" placeholder='english'
                        defaultValue={this.props.values.row.english}/>
