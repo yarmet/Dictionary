@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.components.database.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +29,7 @@ class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    @Transactional
     public void registryUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRegistrationDate(Utils.getCurrentTimestampAsUTC());

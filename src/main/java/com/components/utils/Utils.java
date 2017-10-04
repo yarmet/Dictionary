@@ -24,7 +24,7 @@ public class Utils {
         return Timestamp.valueOf(ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime());
     }
 
-//       java 7
+//    java 7
 //    public static Timestamp getCurrentTimestampAsUTC() {
 //        Timestamp timestamp = null;
 //        String DATE_FORMAT = "yyyy.MM.dd.HH.mm.ss";
@@ -53,14 +53,20 @@ public class Utils {
 
 
     public static boolean userIsLogged() {
-        Collection<GrantedAuthority> authorities = Utils.getUserRoles();
-        for (GrantedAuthority authority : authorities) {
-            String authAsString = authority.getAuthority();
-            if (authAsString.equals(ANONYMOUS_USER)) {
-                return false;
-            }
-        }
-        return true;
+        return getUserRoles().stream().noneMatch(e -> e.getAuthority().equals(ANONYMOUS_USER));
     }
+
+
+//    java 7
+//    public static boolean userIsLogged() {
+//        for (GrantedAuthority authority : getUserRoles()) {
+//            String authAsString = authority.getAuthority();
+//            if (authAsString.equals(ANONYMOUS_USER)) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+
 
 }

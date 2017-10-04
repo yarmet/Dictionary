@@ -9,11 +9,12 @@ import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
-import static com.components.utils.Utils.userIsLogged;
+import  com.components.utils.Utils;
 
 
 @Service
@@ -32,6 +33,7 @@ class WordsServiceImpl implements WordsService {
     private UserRepository userRepository;
 
     @Override
+    @Transactional
     public Word save(Word word) {
         word.setDate(Utils.getCurrentTimestampAsUTC());
         word.setUserId(getLoggedUser().getId());
@@ -39,6 +41,7 @@ class WordsServiceImpl implements WordsService {
     }
 
     @Override
+    @Transactional
     public Word update(Word word) {
         Date date = wordRepository.findOne(word.getId()).getDate();
         word.setDate(date);
@@ -61,7 +64,7 @@ class WordsServiceImpl implements WordsService {
 
     @Override
     public List<Word> getLastRandomWords() {
-        return userIsLogged() ?
+        return Utils.userIsLogged() ?
                 randomWordsRepository.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
                 randomWordsRepository.getLastRandomWords(wordCount);
     }

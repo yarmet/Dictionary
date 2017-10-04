@@ -4,11 +4,12 @@ import com.components.database.models.User;
 import com.components.database.models.Word;
 import com.components.utils.Utils;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+
 
 @Repository
 class RandomWordsRepositoryImpl implements RandomWordsRepository {
@@ -17,7 +18,6 @@ class RandomWordsRepositoryImpl implements RandomWordsRepository {
     private EntityManager entityManager;
 
 
-    @Transactional(readOnly = true)
     public List<Word> getAnyRandomWords(int wordCount) {
         Query query = entityManager.createQuery("select o from Word o order by rand()");
         query.setMaxResults(wordCount);
@@ -25,7 +25,6 @@ class RandomWordsRepositoryImpl implements RandomWordsRepository {
     }
 
 
-    @Transactional(readOnly = true)
     public List<Word> getLastRandomWords(int wordCount) {
         Query query = entityManager.createQuery("select o from Word o WHERE date >=:prevMonth  order by rand()");
         query.setParameter("prevMonth", Utils.getPreviousMonth());

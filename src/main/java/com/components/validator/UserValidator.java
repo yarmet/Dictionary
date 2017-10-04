@@ -15,7 +15,6 @@ public class UserValidator implements Validator {
     private static int INPUT_MIN_LENGTH = 3;
 
 
-
     @Autowired
     private UserService userService;
 

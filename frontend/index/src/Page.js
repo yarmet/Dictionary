@@ -124,7 +124,6 @@ export default connect(
         addRow: row => dispatch({type: StoreCommands.ADD_ROW, payload: row}),
         updateAll: arr => dispatch({type: StoreCommands.UPDATE_ALL_ROWS, payload: arr}),
         updateRow: (arrID, row) => dispatch({type: StoreCommands.UPDATE_ROW, id: arrID, payload: row}),
-        removeRow: arrayId => dispatch({type: StoreCommands.DELETE_ROW, id: arrayId}),
-        addRow: row => dispatch({type: StoreCommands.ADD_ROW, payload: row})
+        removeRow: arrayId => dispatch({type: StoreCommands.DELETE_ROW, id: arrayId})
     })
 )(Page);
