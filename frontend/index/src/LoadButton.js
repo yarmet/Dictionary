@@ -13,7 +13,7 @@ class LoadButton extends Component {
     }
 
     loadWords() {
-        ajax(this.props.loadAll ? '/getWords' : '/getLastWords', 'GET', null, true)
+        ajax(this.props.loadAnyRows ? '/getWords' : '/getLastWords', 'GET', null, true)
             .then(rows => this.props.action(JSON.parse(rows)))
     }
 

@@ -16,7 +16,7 @@ class LoadChoiceSwitcher extends Component {
                                    this.props.action(true);
                                }
                            }
-                           defaultChecked={this.state.loadAll === true}/> загрузить все </label>
+                           defaultChecked={this.state.loadAnyRows === true}/> загрузить все </label>
 
             <label> <input type="radio" name="loadOpt"
                            onClick={
@@ -25,7 +25,7 @@ class LoadChoiceSwitcher extends Component {
                                    this.props.action(false);
                                }
                            }
-                           defaultChecked={this.state.loadAll === false}/> загрузить за последний месяц </label>
+                           defaultChecked={this.state.loadAnyRows === false}/> загрузить за последний месяц </label>
         </div>
     }
 }

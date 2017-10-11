@@ -20,8 +20,8 @@ class Page extends Component {
         this.counter = 0;
 
         this.state = {
-            hideRusLang: true,
-            loadAll: true,
+            hideRusTranslate: true,
+            loadAnyRows: true,
             tableBlocked: false,
             admin: false,
 
@@ -55,11 +55,11 @@ class Page extends Component {
                 <h3>Словарь</h3>
 
 
-                <LoadChoiceSwitcher initValue={this.state.loadAll} action={bool => this.setState({loadAll: bool})}/>
+                <LoadChoiceSwitcher initValue={this.state.loadAnyRows} action={bool => this.setState({loadAnyRows: bool})}/>
 
 
-                <LanguageSwitcher initValue={this.state.hideRusLang}
-                                  action={bool => this.setState({hideRusLang: bool})}/>
+                <LanguageSwitcher initValue={this.state.hideRusTranslate}
+                                  action={bool => this.setState({hideRusTranslate: bool})}/>
 
 
                 {this.state.showAddBlock ?
@@ -77,15 +77,15 @@ class Page extends Component {
                                  values={this.state.rowToDispatch} callback={this.props.removeRow}/> : null}
 
 
-                <LoadButton action={this.props.updateAll} loadAll={this.state.loadAll}/>
+                <LoadButton action={this.props.updateAll} loadAll={this.state.loadAnyRows}/>
 
 
                 <table className="shadow">
 
                     <thead>
                     <tr>
-                        <td> {this.state.hideRusLang ? 'английский' : 'русский'}</td>
-                        <td> {this.state.hideRusLang ? 'русский' : 'английский'}</td>
+                        <td> {this.state.hideRusTranslate ? 'английский' : 'русский'}</td>
+                        <td> {this.state.hideRusTranslate ? 'русский' : 'английский'}</td>
 
 
                         {this.state.admin ?
@@ -101,10 +101,10 @@ class Page extends Component {
                     {this.props.elements.map((row, arrId) => {
                         return <tr key={this.counter + arrId}>
 
-                            <td>{this.state.hideRusLang ? row.english : row.russian}</td>
+                            <td>{this.state.hideRusTranslate ? row.english : row.russian}</td>
 
 
-                            <HiddenTD>{this.state.hideRusLang ? row.russian : row.english}</HiddenTD>
+                            <HiddenTD>{this.state.hideRusTranslate ? row.russian : row.english}</HiddenTD>
 
 
                             <ManageTD blocked={this.state.tableBlocked} admin={this.state.admin}
