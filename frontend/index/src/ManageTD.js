@@ -11,8 +11,7 @@ class ManageTD extends Component {
 
     drawUrlIfNeed() {
         return this.props.blocked ? <span>{this.props.children}</span> :
-            <a onClick={() => this.props.callBack(this.props.row, this.props.arrayId)}
-               href="javascript:void(0);">{this.props.children}</a>
+            <a onClick={() => this.props.callBack()} href="javascript:void(0);">{this.props.children}</a>
     }
 
     drawTdIfNeed() {

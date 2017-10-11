@@ -9,17 +9,14 @@ class EditBlock extends Component {
             russian: this.refs.rus.value,
             english: this.refs.eng.value
         }), true).then((row) => {
-            this.props.action(this.props.values.arrayId, JSON.parse(row));
+            this.props.callback(this.props.values.idInArray, JSON.parse(row));
             this.props.close()
         });
     }
 
 
     render() {
-        var display = null;
-
-        if (this.props.values.show) {
-            display = <div className="positionAbsolute form-inline">
+      return <div className="positionAbsolute form-inline">
 
                 <div className="closeSymbol"><a onClick={() => this.props.close()}
                                                 href="javascript:void(0);">&times;</a></div>
@@ -32,8 +29,6 @@ class EditBlock extends Component {
 
                 <button className="btn btn-danger" onClick={this.send.bind(this)}>изменить</button>
             </div>
-        }
-        return display;
     }
 }
 

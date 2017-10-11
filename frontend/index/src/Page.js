@@ -24,9 +24,12 @@ class Page extends Component {
             loadAll: true,
             tableBlocked: false,
             admin: false,
-            editBlock: {show: false},
-            addBlock: {show: false},
-            removeBlock: {show: false}
+
+            showEditBlock: false,
+            showAddBlock: false,
+            showRemoveBlock: false,
+
+            rowToDispatch: {idInArray: null, row: null}
         };
     }
 
@@ -48,24 +51,34 @@ class Page extends Component {
 
                 <Navbar callback={() => this.setState({admin: !this.state.admin})}/>
 
+
                 <h3>Словарь</h3>
 
-                <LoadChoiceSwitcher initValue={this.state.loadAll}
-                                    action={bool => this.setState({loadAll: bool})}/>
+
+                <LoadChoiceSwitcher initValue={this.state.loadAll} action={bool => this.setState({loadAll: bool})}/>
+
 
                 <LanguageSwitcher initValue={this.state.hideRusLang}
                                   action={bool => this.setState({hideRusLang: bool})}/>
 
-                <AddBlock close={() => this.setState({tableBlocked: false, addBlock: {show: false}})}
-                          show={this.state.addBlock.show} action={this.props.addRow}/>
 
-                <EditBlock close={() => this.setState({tableBlocked: false, editBlock: {show: false}})}
-                           values={this.state.editBlock} action={this.props.updateRow}/>
+                {this.state.showAddBlock ?
+                    <AddBlock close={() => this.setState({tableBlocked: false, showAddBlock: false})}
+                              callback={this.props.addRow}/> : null}
 
-                <RemoveBlock close={() => this.setState({tableBlocked: false, removeBlock: {show: false}})}
-                             values={this.state.removeBlock} action={this.props.removeRow}/>
+
+                {this.state.showEditBlock ?
+                    <EditBlock close={() => this.setState({tableBlocked: false, showEditBlock: false})}
+                               values={this.state.rowToDispatch} callback={this.props.updateRow}/> : null}
+
+
+                {this.state.showRemoveBlock ?
+                    <RemoveBlock close={() => this.setState({tableBlocked: false, showRemoveBlock: false})}
+                                 values={this.state.rowToDispatch} callback={this.props.removeRow}/> : null}
+
 
                 <LoadButton action={this.props.updateAll} loadAll={this.state.loadAll}/>
+
 
                 <table className="shadow">
 
@@ -74,10 +87,11 @@ class Page extends Component {
                         <td> {this.state.hideRusLang ? 'английский' : 'русский'}</td>
                         <td> {this.state.hideRusLang ? 'русский' : 'английский'}</td>
 
+
                         {this.state.admin ?
                             <td colSpan="2"> {this.state.tableBlocked ? <span>добавить слово</span> :
                                 <a href="javascript:void(0);"
-                                   onClick={() => this.setState({addBlock: {show: true}, tableBlocked: true})}>добавить
+                                   onClick={() => this.setState({showAddBlock: {show: true}, tableBlocked: true})}>добавить
                                     слово</a>} </td> : null}
                     </tr>
                     </thead>
@@ -89,25 +103,24 @@ class Page extends Component {
 
                             <td>{this.state.hideRusLang ? row.english : row.russian}</td>
 
+
                             <HiddenTD>{this.state.hideRusLang ? row.russian : row.english}</HiddenTD>
 
 
-                            <ManageTD blocked={this.state.tableBlocked} arrayId={arrId} admin={this.state.admin}
-                                      row={row} callBack={(row, arrID) =>
-                                this.setState({
-                                    tableBlocked: true,
-                                    editBlock: {show: true, arrayId: arrID, row: row}
-                                })}>ред.</ManageTD>
+                            <ManageTD blocked={this.state.tableBlocked} admin={this.state.admin}
+                                      callBack={() =>
+                                          this.setState({
+                                              tableBlocked: true, showEditBlock: true,
+                                              rowToDispatch: {idInArray: arrId, row: row}
+                                          })}>ред.</ManageTD>
 
 
-                            <ManageTD blocked={this.state.tableBlocked} arrayId={arrId} admin={this.state.admin}
-                                      row={row} callBack={(row, arrID) =>
-                                this.setState({
-                                    tableBlocked: true,
-                                    removeBlock: {show: true, arrayId: arrID, id: row.id}
-                                })
-                            }>уд.</ManageTD>
-
+                            <ManageTD blocked={this.state.tableBlocked} admin={this.state.admin}
+                                      callBack={() =>
+                                          this.setState({
+                                              tableBlocked: true, showRemoveBlock: true,
+                                              rowToDispatch: {idInArray: arrId, row: row}
+                                          })}>уд.</ManageTD>
                         </tr>
                     })}
                     </tbody>
