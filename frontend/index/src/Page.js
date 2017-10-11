@@ -91,7 +91,7 @@ class Page extends Component {
                         {this.state.admin ?
                             <td colSpan="2"> {this.state.tableBlocked ? <span>добавить слово</span> :
                                 <a href="javascript:void(0);"
-                                   onClick={() => this.setState({showAddBlock: {show: true}, tableBlocked: true})}>добавить
+                                   onClick={() => this.setState({showAddBlock: true, tableBlocked: true})}>добавить
                                     слово</a>} </td> : null}
                     </tr>
                     </thead>
