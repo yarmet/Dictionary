@@ -110,7 +110,8 @@ class Page extends Component {
                             <ManageTD blocked={this.state.tableBlocked} admin={this.state.admin}
                                       callBack={() =>
                                           this.setState({
-                                              tableBlocked: true, showEditBlock: true,
+                                              tableBlocked: true,
+                                              showEditBlock: true,
                                               rowToDispatch: {idInArray: arrId, row: row}
                                           })}>ред.</ManageTD>
 
@@ -118,7 +119,8 @@ class Page extends Component {
                             <ManageTD blocked={this.state.tableBlocked} admin={this.state.admin}
                                       callBack={() =>
                                           this.setState({
-                                              tableBlocked: true, showRemoveBlock: true,
+                                              tableBlocked: true,
+                                              showRemoveBlock: true,
                                               rowToDispatch: {idInArray: arrId, row: row}
                                           })}>уд.</ManageTD>
                         </tr>

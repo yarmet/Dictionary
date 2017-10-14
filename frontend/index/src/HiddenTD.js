@@ -12,8 +12,8 @@ class HiddenTD extends Component {
     render() {
         return (
             <td> {this.state.hidden ?
-                <a onClick={() => this.setState({hidden: false})}
-                   href="javascript:void(0);">показать</a> : this.props.children} </td>
+                <a onClick={() => this.setState({hidden: false})} href="javascript:void(0);">показать</a>
+                : this.props.children} </td>
         )
     }
 }

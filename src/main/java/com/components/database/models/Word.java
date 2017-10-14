@@ -14,15 +14,15 @@ public class Word {
 
     @Id
     @Column(name = "id")
-    @JsonView(View.Word.class)
+    @JsonView(View.WordView.class)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @JsonView(View.Word.class)
+    @JsonView(View.WordView.class)
     @Column(name = "russian")
     private String russian;
 
-    @JsonView(View.Word.class)
+    @JsonView(View.WordView.class)
     @Column(name = "english")
     private String english;
 

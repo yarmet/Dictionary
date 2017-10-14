@@ -2,7 +2,7 @@ package com.components.jacksonfilters;
 
 
 public class View {
-    public static class Word {
+    public static class WordView {
     }
 }
 
