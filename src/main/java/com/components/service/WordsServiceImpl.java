@@ -1,8 +1,8 @@
 package com.components.service;
 
-import com.components.database.repository.RandomWordsRepository;
-import com.components.database.repository.UserRepository;
-import com.components.database.repository.WordRepository;
+import com.components.database.repository.CustomWordrepository;
+import com.components.database.repository.JpaUserRepository;
+import com.components.database.repository.JpaWordRepository;
 import com.components.database.models.User;
 import com.components.database.models.Word;
 import com.components.utils.Utils;
@@ -11,66 +11,74 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 
 @Service
 class WordsServiceImpl implements WordsService {
 
+
     @Value("${words.count}")
     private int wordCount;
 
-    @Autowired
-    private WordRepository wordRepository;
 
     @Autowired
-    private RandomWordsRepository randomWordsRepository;
+    private JpaWordRepository jpaWordRepository;
+
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomWordrepository customWordrepository;
+
+
+    @Autowired
+    private JpaUserRepository jpaUserRepository;
+
 
     @Override
     @Transactional
     public Word save(Word word) {
-        word.setDate(Utils.getCurrentTimestampAsUTC());
-        word.setUserId(getLoggedUser().getId());
-        return wordRepository.save(word);
+        User user = getLoggedUser();
+        word.setCreateDate(Utils.getCurrentTimestampAsUTC());
+        word.setUser(user);
+        user.setWords(Collections.singletonList(word));
+        return jpaWordRepository.save(word);
     }
+
 
     @Override
     @Transactional
     public Word update(Word word) {
-        Date date = wordRepository.findOne(word.getId()).getDate();
-        word.setDate(date);
-        word.setUserId(getLoggedUser().getId());
-        return wordRepository.save(word);
+        int updatedRowCount = customWordrepository.updateWord(word);
+        return updatedRowCount == 1 ? word : null;
     }
+
 
     @Override
     public void delete(Word word) {
-        wordRepository.delete(word);
+        jpaWordRepository.delete(word);
     }
+
 
     @Override
     public List<Word> getRandomWords() {
         return Utils.userIsLogged() ?
-                randomWordsRepository.getAnyRandomWordsForUser(getLoggedUser(), wordCount) :
-                randomWordsRepository.getAnyRandomWords(wordCount);
+                customWordrepository.getAnyRandomWordsForUser(getLoggedUser(), wordCount) :
+                customWordrepository.getAnyRandomWords(wordCount);
     }
 
 
     @Override
     public List<Word> getLastRandomWords() {
         return Utils.userIsLogged() ?
-                randomWordsRepository.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
-                randomWordsRepository.getLastRandomWords(wordCount);
+                customWordrepository.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
+                customWordrepository.getLastRandomWords(wordCount);
     }
 
 
     private User getLoggedUser() {
         String username = Utils.getCurrentUsername();
-        return userRepository.findByUsername(username);
+        return jpaUserRepository.findByUsername(username);
     }
 
 }

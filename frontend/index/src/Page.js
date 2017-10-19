@@ -37,7 +37,7 @@ class Page extends Component {
     render() {
 
         {
-            this.counter += this.props.elements.length
+            this.counter += this.props.elements.length;
 
             if (this.state.tableBlocked) {
                 document.body.classList.add('transparent');
@@ -51,16 +51,12 @@ class Page extends Component {
 
                 <Navbar callback={() => this.setState({admin: !this.state.admin})}/>
 
-
                 <h3>Словарь</h3>
-
 
                 <LoadChoiceSwitcher initValue={this.state.loadAnyRows} action={bool => this.setState({loadAnyRows: bool})}/>
 
-
                 <LanguageSwitcher initValue={this.state.hideRusTranslate}
                                   action={bool => this.setState({hideRusTranslate: bool})}/>
-
 
                 {this.state.showAddBlock ?
                     <AddBlock close={() => this.setState({tableBlocked: false, showAddBlock: false})}

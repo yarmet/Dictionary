@@ -4,7 +4,7 @@ class LoadChoiceSwitcher extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {loadAll: this.props.initValue};
+        this.state = {loadAnyRows: this.props.initValue};
     }
 
     render() {
@@ -12,7 +12,7 @@ class LoadChoiceSwitcher extends Component {
             <label> <input type="radio" name="loadOpt"
                            onClick={
                                () => {
-                                   this.setState({loadAll: true});
+                                   this.setState({loadAnyRows: true});
                                    this.props.action(true);
                                }
                            }
@@ -21,7 +21,7 @@ class LoadChoiceSwitcher extends Component {
             <label> <input type="radio" name="loadOpt"
                            onClick={
                                () => {
-                                   this.setState({loadAll: false});
+                                   this.setState({loadAnyRows: false});
                                    this.props.action(false);
                                }
                            }

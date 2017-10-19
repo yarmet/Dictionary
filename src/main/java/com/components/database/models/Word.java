@@ -4,6 +4,7 @@ package com.components.database.models;
 import com.components.jacksonfilters.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -26,9 +27,11 @@ public class Word {
     @Column(name = "english")
     private String english;
 
-    @Column(name = "user_id")
-    private long userId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "createDate")
+    private Date createDate;
+
 }

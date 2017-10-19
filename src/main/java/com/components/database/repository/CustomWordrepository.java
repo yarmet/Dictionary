@@ -2,9 +2,10 @@ package com.components.database.repository;
 
 import com.components.database.models.User;
 import com.components.database.models.Word;
+
 import java.util.List;
 
-public interface RandomWordsRepository {
+public interface CustomWordrepository {
 
     List<Word> getAnyRandomWords(int wordCount);
 
@@ -14,4 +15,5 @@ public interface RandomWordsRepository {
 
     List<Word> getLastRandomWordsForUser(User user, int wordCount);
 
+    int updateWord(Word word);
 }

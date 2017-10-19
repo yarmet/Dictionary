@@ -1,6 +1,6 @@
 package com.components.service;
 
-import com.components.database.repository.UserRepository;
+import com.components.database.repository.JpaUserRepository;
 import com.components.database.models.Role;
 import com.components.database.models.User;
 import com.components.utils.Utils;
@@ -18,7 +18,7 @@ import java.util.Set;
 class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
 
     @Override
     @Transactional

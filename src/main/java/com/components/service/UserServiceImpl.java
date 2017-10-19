@@ -1,7 +1,7 @@
 package com.components.service;
 
 import com.components.database.repository.RoleRepository;
-import com.components.database.repository.UserRepository;
+import com.components.database.repository.JpaUserRepository;
 import com.components.database.models.Role;
 import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ class UserServiceImpl implements UserService {
     private static final Long ROLE_USER = 1L;
 
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;

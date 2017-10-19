@@ -1573,7 +1573,7 @@ Progressive Web Apps are faster and more reliable than traditional web pages, an
 The [`sw-precache-webpack-plugin`](https://github.com/goldhand/sw-precache-webpack-plugin)
 is integrated into production configuration,
 and it will take care of generating a service worker file that will automatically
-precache all of your local assets and keep them up to date as you deploy updates.
+precache all of your local assets and keep them up to createDate as you deploy updates.
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
 for handling all requests for local assets, including the initial HTML, ensuring
 that your web app is reliably fast, even on a slow or unreliable network.
