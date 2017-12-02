@@ -121,7 +121,7 @@
 
 
     <build>
-        <finalName>Dictionary</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -137,7 +137,7 @@
                 <version>2.6</version>
                 <configuration>
                     <warSourceDirectory>src/main/web</warSourceDirectory>
-                    <warName>Dictionary</warName>
+                    <warName>ROOT</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
