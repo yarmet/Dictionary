@@ -44,9 +44,9 @@ a, p {
 
 .positionAbsolute {
     margin: auto;
-    width: 540px;
+    width: 550px;
     height: 80px;
-    padding: 20px;
+    padding: 20px 0;
     position: absolute;
     border-radius: 4px;
     background-color: white;
