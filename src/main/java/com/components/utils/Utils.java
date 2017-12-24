@@ -3,6 +3,7 @@ package com.components.utils;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.time.ZoneOffset;
@@ -24,20 +25,14 @@ public class Utils {
         return Timestamp.valueOf(ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime());
     }
 
-//    java 7
-//    public static Timestamp getCurrentTimestampAsUTC() {
-//        Timestamp timestamp = null;
-//        String DATE_FORMAT = "yyyy.MM.dd.HH.mm.ss";
-//        SimpleDateFormat dateFormatGmt = new SimpleDateFormat(DATE_FORMAT);
-//        dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
-//        SimpleDateFormat dateFormatLocal = new SimpleDateFormat(DATE_FORMAT);
-//        try {
-//            timestamp = new Timestamp(dateFormatLocal.parse(dateFormatGmt.format(new Date())).getTime());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return timestamp;
-//    }
+    // этот метод действительно нужен?
+    public static String findLoggedInUsername() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if (userDetails instanceof UserDetails) {
+            return ((UserDetails) userDetails).getUsername();
+        }
+        return null;
+    }
 
 
     public static String getCurrentUsername() {
@@ -55,18 +50,6 @@ public class Utils {
     public static boolean userIsLogged() {
         return getUserRoles().stream().noneMatch(e -> e.getAuthority().equals(ANONYMOUS_USER));
     }
-
-
-//    java 7
-//    public static boolean userIsLogged() {
-//        for (GrantedAuthority authority : getUserRoles()) {
-//            String authAsString = authority.getAuthority();
-//            if (authAsString.equals(ANONYMOUS_USER)) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
 
 
 }

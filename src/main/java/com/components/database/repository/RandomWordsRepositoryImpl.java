@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-class RandomWordsRepositoryImpl implements CustomWordrepository {
+public class RandomWordsRepositoryImpl {
 
 
     @PersistenceContext
@@ -34,7 +34,7 @@ class RandomWordsRepositoryImpl implements CustomWordrepository {
     }
 
 
-    @Override
+
     public List<Word> getAnyRandomWordsForUser(User user, int wordCount) {
         Query query = entityManager.createQuery("select w from User u join u.words w WHERE u.id =:userId order by rand()");
         query.setParameter("userId", user.getId());
@@ -43,7 +43,7 @@ class RandomWordsRepositoryImpl implements CustomWordrepository {
     }
 
 
-    @Override
+
     public List<Word> getLastRandomWordsForUser(User user, int wordCount) {
         Query query = entityManager.createQuery("select w from User u join u.words w WHERE u.id =:userId AND w.createDate >=:prevMonth order by rand()");
         query.setParameter("prevMonth", Utils.getPreviousMonth());
