@@ -2,13 +2,12 @@ package com.components.controller;
 
 
 import com.components.database.models.User;
-import com.components.database.models.Word;
-import com.components.database.models.WordGroups;
-import com.components.database.repository.JpaWordRepository;
 import com.components.service.SecurityService;
 import com.components.service.UserService;
+import com.components.utils.Utils;
 import com.components.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-
 @Controller
 public class UserController {
 
-    @Autowired
-    private JpaWordRepository jpaWordRepository;
 
     @Autowired
     private UserService userService;
@@ -38,6 +34,12 @@ public class UserController {
         model.addAttribute("userForm", new User());
         return "registry";
     }
+
+    @RequestMapping(value = "userIsLogged", method = RequestMethod.POST)
+    public ResponseEntity<?> roles() {
+        return ResponseEntity.ok(Utils.userIsLogged());
+    }
+
 
     @RequestMapping(value = "/registry", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {

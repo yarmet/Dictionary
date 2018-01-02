@@ -13,12 +13,12 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "word_groups")
-public class WordGroups {
+public class WordGroup {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;

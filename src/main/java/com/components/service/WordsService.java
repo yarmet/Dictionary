@@ -1,17 +1,13 @@
 package com.components.service;
 
-import com.components.database.repository.JpaUserRepository;
+import com.components.database.models.WordGroup;
 import com.components.database.repository.JpaWordRepository;
-import com.components.database.models.User;
 import com.components.database.models.Word;
-import com.components.database.repository.RandomWordsRepositoryImpl;
-import com.components.utils.Utils;
+import com.components.database.repository.RandomWordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -28,33 +24,12 @@ public class WordsService {
 
 
     @Autowired
-    private RandomWordsRepositoryImpl customWordrepository;
+    private RandomWordsRepository randomWordsRepository;
 
 
-    @Autowired
-    private JpaUserRepository jpaUserRepository;
-
-
-
-    @Transactional
-    public Word save(Word word) {
-//        User user = getLoggedUser();
-//        word.setCreateDate(Utils.getCurrentTimestampAsUTC());
-//        word.setUser(user);
-//        user.setWords(Collections.singletonList(word));
-//        return jpaWordRepository.save(word);
-        return null;
-
-    }
-
-
-
-    @Transactional
     public Word update(Word word) {
-        int updatedRowCount = customWordrepository.updateWord(word);
-        return updatedRowCount == 1 ? word : null;
+        return jpaWordRepository.save(word);
     }
-
 
 
     public void delete(Word word) {
@@ -62,25 +37,13 @@ public class WordsService {
     }
 
 
-
-    public List<Word> getRandomWords() {
-        return Utils.userIsLogged() ?
-                customWordrepository.getAnyRandomWordsForUser(getLoggedUser(), wordCount) :
-                customWordrepository.getAnyRandomWords(wordCount);
+    public Word save(Word word) {
+        return jpaWordRepository.save(word);
     }
 
 
-
-    public List<Word> getLastRandomWords() {
-        return Utils.userIsLogged() ?
-                customWordrepository.getLastRandomWordsForUser(getLoggedUser(), wordCount) :
-                customWordrepository.getLastRandomWords(wordCount);
-    }
-
-
-    private User getLoggedUser() {
-        String username = Utils.getCurrentUsername();
-        return jpaUserRepository.findByUsername(username);
+    public List<Word> getRandomWords(WordGroup wordGroup) {
+        return randomWordsRepository.getAnyRandomWords(wordGroup, wordCount);
     }
 
 }

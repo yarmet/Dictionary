@@ -5,7 +5,6 @@ import com.components.jacksonfilters.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -34,6 +33,6 @@ public class Word {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "word_groups_id")
-    private WordGroups wordGroups;
+    private WordGroup wordGroup;
 
 }

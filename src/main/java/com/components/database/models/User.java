@@ -19,7 +19,7 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     @Column(name = "username", unique = true)
     private String username;
@@ -42,6 +42,6 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    private List<WordGroups> wordGroups = new ArrayList<>();
+    private List<WordGroup> wordGroups = new ArrayList<>();
 
 }

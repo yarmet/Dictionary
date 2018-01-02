@@ -26,13 +26,13 @@ public class Utils {
     }
 
     // этот метод действительно нужен?
-    public static String findLoggedInUsername() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails) userDetails).getUsername();
-        }
-        return null;
-    }
+//    public static String findLoggedInUsername() {
+//        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+//        if (userDetails instanceof UserDetails) {
+//            return ((UserDetails) userDetails).getUsername();
+//        }
+//        return null;
+//    }
 
 
     public static String getCurrentUsername() {
