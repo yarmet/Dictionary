@@ -3,9 +3,9 @@ package com.components.database.models;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +42,6 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Word> words;
+    private List<WordGroups> wordGroups = new ArrayList<>();
 
 }

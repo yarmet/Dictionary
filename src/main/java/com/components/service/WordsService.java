@@ -38,11 +38,13 @@ public class WordsService {
 
     @Transactional
     public Word save(Word word) {
-        User user = getLoggedUser();
-        word.setCreateDate(Utils.getCurrentTimestampAsUTC());
-        word.setUser(user);
-        user.setWords(Collections.singletonList(word));
-        return jpaWordRepository.save(word);
+//        User user = getLoggedUser();
+//        word.setCreateDate(Utils.getCurrentTimestampAsUTC());
+//        word.setUser(user);
+//        user.setWords(Collections.singletonList(word));
+//        return jpaWordRepository.save(word);
+        return null;
+
     }
 
 

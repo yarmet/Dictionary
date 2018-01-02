@@ -2,6 +2,9 @@ package com.components.controller;
 
 
 import com.components.database.models.User;
+import com.components.database.models.Word;
+import com.components.database.models.WordGroups;
+import com.components.database.repository.JpaWordRepository;
 import com.components.service.SecurityService;
 import com.components.service.UserService;
 import com.components.validator.UserValidator;
@@ -13,8 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
+
 @Controller
 public class UserController {
+
+    @Autowired
+    private JpaWordRepository jpaWordRepository;
 
     @Autowired
     private UserService userService;
