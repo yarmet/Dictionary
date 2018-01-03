@@ -30,7 +30,7 @@ public class WordGroup {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "wordGroups")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "wordGroup")
     private List<Word> words = new ArrayList<>();
 
 }

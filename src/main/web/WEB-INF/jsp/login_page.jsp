@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: ruslan
@@ -11,7 +12,7 @@
 <head>
     <title>login page</title>
     <link href="<c:url value="/res/css/bootstrap.min.css" />" rel="stylesheet">
-    <link href="<c:url value="/res/css/login.css" />" rel="stylesheet">
+    <link href="<c:url value="/res/css/registry.css" />" rel="stylesheet">
 </head>
 
 
@@ -19,91 +20,38 @@
 
 <section class="container">
 
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-
-            <div class="nav navbar-nav">
-                <div class="navbar-brand"><a href="<c:url value="/welcome"/>">главная</a></div>
-            </div>
-
-            <div class="nav navbar-nav navbar-right">
-                <div div class="navbar-brand"><a href=" <c:url value="/registry" />">регистрация</a></div>
-            </div>
-        </div>
-    </nav>
-
-
-    <h2>войти</h2>
     <div class="row">
         <div class="col-lg-4 col-lg-offset-4">
-            <form action="<c:url value='/login'/>" method='POST'>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <form action="<c:url value='/login'/>" method='POST' class="form-signin">
 
-                <div class="form-group has-error">
-                    <label for="login">Логин</label>
-                    <input class="form-control" autofocus name="username" id="login" maxlength="15"
-                           oninput="loginChanged(this)">
-                </div>
+                <h2 class="form-signin-heading">Войти</h2>
 
-                <div class="form-group has-error">
-                    <label for="pass">Пароль</label>
-                    <input class="form-control" type="password" name="password" id="pass" maxlength="15"
-                           oninput="passwordChanged(this)">
-                </div>
-
-                <div class="checkbox">
-                    <label><input name="remember-me" type="checkbox">запомнить меня</label>
+                <div class="form-group">
+                    <input class="form-control" autofocus name="username" id="login" maxlength="15" placeholder="Логин">
                 </div>
 
                 <div class="form-group">
-                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="войти" id="button">
+                    <input class="form-control" type="password" name="password" id="pass" maxlength="15"
+                           placeholder="Пароль">
                 </div>
+
+                <div class="form-group">
+                    <label for="remember">запомнить меня</label>
+                    <input id="remember" name="remember-me" type="checkbox">
+                </div>
+
+
+                <button class="btn btn-lg btn-primary btn-block" >войти</button>
+
+
+                <a href=" <c:url value="/registry" />">регистрация</a>
+
                 <span>${message}</span>
                 <span>${error}</span>
             </form>
         </div>
     </div>
 </section>
-
-
-<script>
-    var loginIsValid = false;
-    var passIsValid = false;
-    var button = document.getElementById("button");
-    button.disabled = true;
-
-    function setValid(inp, addClass, removeClass) {
-        inp.classList.add(addClass);
-        inp.classList.remove(removeClass);
-    }
-
-    function loginChanged(input) {
-        if (/\s/g.test(input.value) || input.value.length < 3) {
-            setValid(input.parentNode, 'has-error', 'has-success');
-            loginIsValid = false;
-        } else {
-            setValid(input.parentNode, 'has-success', 'has-error');
-            loginIsValid = true;
-        }
-        checkButton();
-    }
-
-    function passwordChanged(input) {
-        if (/\s/g.test(input.value) || input.value.length < 3) {
-            setValid(input.parentNode, 'has-error', 'has-success');
-            passIsValid = false;
-        } else {
-            setValid(input.parentNode, 'has-success', 'has-error');
-            passIsValid = true;
-        }
-        checkButton();
-    }
-
-    function checkButton() {
-        button.disabled = !(loginIsValid && passIsValid);
-    }
-
-</script>
 
 
 </body>
