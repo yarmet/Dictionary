@@ -40,14 +40,12 @@
                     <input id="remember" name="remember-me" type="checkbox">
                 </div>
 
-
                 <button class="btn btn-lg btn-primary btn-block" >войти</button>
 
-
                 <a href=" <c:url value="/registry" />">регистрация</a>
-
-                <span>${message}</span>
-                <span>${error}</span>
+                <br/>
+                <span class="has-error">${message}</span>
+                <span class="has-error">${error}</span>
             </form>
         </div>
     </div>
