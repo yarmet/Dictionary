@@ -2,7 +2,6 @@ package com.components.controller;
 
 
 import com.components.database.models.User;
-import com.components.service.SecurityService;
 import com.components.service.UserService;
 import com.components.utils.Utils;
 import com.components.validator.UserValidator;
@@ -19,15 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class UserController {
 
-
     @Autowired
     private UserService userService;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
     private UserValidator userValidator;
+
+
+    @RequestMapping(value = "userIsLogged", method = RequestMethod.POST)
+    public ResponseEntity<?> userIsLogged() {
+        return ResponseEntity.ok(Utils.userIsLogged());
+    }
+
 
     @RequestMapping(value = "/registry", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -35,20 +37,14 @@ public class UserController {
         return "registry";
     }
 
-    @RequestMapping(value = "userIsLogged", method = RequestMethod.POST)
-    public ResponseEntity<?> roles() {
-        return ResponseEntity.ok(Utils.userIsLogged());
-    }
-
-
     @RequestMapping(value = "/registry", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
+    public String registration(@ModelAttribute("userForm") User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registry";
         }
-        userService.registryUser(userForm);
-        securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
+        userService.registryUser(user);
+        userService.autoLogin(user.getUsername());
         return "redirect:/welcome";
     }
 
