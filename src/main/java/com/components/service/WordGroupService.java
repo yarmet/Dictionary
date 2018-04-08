@@ -20,8 +20,12 @@ public class WordGroupService {
     @Autowired
     private JpaWordGroupsRepository jpaWordGroupsRepository;
 
-
+    @Transactional
     public WordGroup save(WordGroup wordGroup) {
+        wordGroup.setCreationDate(Utils.getCurrentTimestampAsUTC());
+        User user = jpaUserRepository.findByUsername(Utils.getCurrentUsername());
+        user.getWordGroups().add(wordGroup);
+        wordGroup.setUser(user);
         return jpaWordGroupsRepository.save(wordGroup);
     }
 
@@ -36,10 +40,9 @@ public class WordGroupService {
     }
 
     @Transactional
-    public List<WordGroup> getAllByCurrentUser() {
-        String username = Utils.getCurrentUsername();
-        User user = jpaUserRepository.findByUsername(username);
-        return jpaWordGroupsRepository.findByUser(user);
+    public List<WordGroup> getGroupsByCurrentUser() {
+        String username =  Utils.getCurrentUsername();
+        return  jpaWordGroupsRepository.findByUserUsername(username);
     }
 
 

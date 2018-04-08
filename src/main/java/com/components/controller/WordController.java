@@ -9,10 +9,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -23,19 +20,19 @@ public class WordController {
     private WordsService wordsService;
 
 
-    @JsonView(View.WordView.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @RequestMapping(value = "/word", method = RequestMethod.GET)
-    public ResponseEntity<?> getWords(WordGroup wordGroup) {
-        return ResponseEntity.ok(wordsService.getRandomWords(wordGroup));
+    @RequestMapping(value = "/getWords/{groupId}", method = RequestMethod.POST)
+    public ResponseEntity<?> getWords(@PathVariable int groupId) {
+        return ResponseEntity.ok(wordsService.getRandomWords(groupId));
     }
 
 
     @JsonView(View.WordView.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "/word", method = RequestMethod.POST)
-    public ResponseEntity<?> addWord(@RequestBody Word word) {
-        return ResponseEntity.ok(wordsService.save(word));
+    public ResponseEntity<?> addWord(@RequestBody Word word ) {
+        wordsService.save(word);
+        return ResponseEntity.ok().build();
     }
 
 

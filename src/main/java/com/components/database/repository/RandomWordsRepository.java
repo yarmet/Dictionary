@@ -15,9 +15,9 @@ public class RandomWordsRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Word> getAnyRandomWords(WordGroup wordGroup, int wordCount) {
-        Query query = entityManager.createQuery("select w from Word w where w.wordGroup=:wordGroup  order by rand()");
-        query.setParameter("wordGroup", wordGroup);
+    public List<Word> getAnyRandomWords(int groupId, int wordCount) {
+        Query query = entityManager.createQuery("select w from Word w join w.wordGroup wg where wg.id=:groupId order by rand()");
+        query.setParameter("groupId", groupId);
         query.setMaxResults(wordCount);
         return query.getResultList();
     }

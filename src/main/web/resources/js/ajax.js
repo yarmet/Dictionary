@@ -1,14 +1,10 @@
-const rootPath = document.getElementById("rootPath").innerText;
-const csrfToken = document.getElementById("csrfToken").innerText;
-
-function ajax(url, type, json, async) {
+function ajax(url, type, json) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
-        xhr.open(type, rootPath.concat(url), async);
-        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        xhr.open(type, url, true);
+        // xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         xhr.send(json);
-
         xhr.onreadystatechange = function () {
             if (xhr.readyState !== 4) return;
             if (xhr.status === 200) {
@@ -24,6 +20,3 @@ function ajax(url, type, json, async) {
         };
     });
 }
-
-
-export default ajax;

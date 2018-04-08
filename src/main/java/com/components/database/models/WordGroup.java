@@ -1,9 +1,12 @@
 package com.components.database.models;
 
 
+import com.components.jacksonfilters.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +16,10 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "word_groups")
-public class WordGroup {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+public class WordGroup extends SuperClass implements Serializable {
 
     @Column(name = "name")
+    @JsonView(View.WordGroupView.class)
     private String name;
 
     @Column(name = "creation_date")

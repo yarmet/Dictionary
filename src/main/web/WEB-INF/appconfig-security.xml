@@ -13,12 +13,13 @@
 
         <csrf disabled="true"/>
 
-        <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
-                    username-parameter="username" password-parameter="password"/>
+        <!--<form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"-->
+                    <!--username-parameter="username" password-parameter="password"/>-->
 
         <remember-me user-service-ref="userDetailsServiceImpl" key="sDk2i0RrR10kok"/>
 
-        <logout logout-success-url="/login?logout" delete-cookies="JSESSIONID"/>
+        <logout delete-cookies="JSESSIONID"/>
+        <!--<logout logout-success-url="/login?logout" delete-cookies="JSESSIONID"/>-->
     </http>
 
     <authentication-manager alias="authenticationManager">

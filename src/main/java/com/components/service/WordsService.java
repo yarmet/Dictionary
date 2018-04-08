@@ -1,12 +1,15 @@
 package com.components.service;
 
 import com.components.database.models.WordGroup;
+import com.components.database.repository.JpaWordGroupsRepository;
 import com.components.database.repository.JpaWordRepository;
 import com.components.database.models.Word;
 import com.components.database.repository.RandomWordsRepository;
+import com.components.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +25,8 @@ public class WordsService {
     @Autowired
     private JpaWordRepository jpaWordRepository;
 
+    @Autowired
+    private JpaWordGroupsRepository jpaWordGroupsRepository;
 
     @Autowired
     private RandomWordsRepository randomWordsRepository;
@@ -36,14 +41,18 @@ public class WordsService {
         jpaWordRepository.delete(word);
     }
 
-
+    @Transactional
     public Word save(Word word) {
+        word.setCreateDate(Utils.getCurrentTimestampAsUTC());
+        WordGroup wordGroup = jpaWordGroupsRepository.findOne(word.getWordGroup().getId());
+        word.setWordGroup(wordGroup);
+        wordGroup.getWords().add(word);
         return jpaWordRepository.save(word);
     }
 
 
-    public List<Word> getRandomWords(WordGroup wordGroup) {
-        return randomWordsRepository.getAnyRandomWords(wordGroup, wordCount);
+    public List<Word> getRandomWords(int groupId) {
+        return randomWordsRepository.getAnyRandomWords(groupId, wordCount);
     }
 
 }
