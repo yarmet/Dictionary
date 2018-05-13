@@ -12,7 +12,12 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "roles")
-public class Role extends SuperClass implements Serializable {
+public class Role implements Serializable {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO )
+    private long id;
 
     @Column(name = "name")
     private String name;

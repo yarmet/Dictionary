@@ -29,12 +29,12 @@ public class WordGroupService {
         return jpaWordGroupsRepository.save(wordGroup);
     }
 
-
+    @Transactional
     public WordGroup update(WordGroup wordGroup) {
         return jpaWordGroupsRepository.save(wordGroup);
     }
 
-
+    @Transactional
     public void delete(WordGroup wordGroup) {
         jpaWordGroupsRepository.delete(wordGroup);
     }

@@ -1,6 +1,5 @@
 package com.components.database.models;
 
-
 import com.components.jacksonfilters.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
@@ -13,8 +12,13 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "words")
-public class Word extends SuperClass implements Serializable {
+public class Word implements Serializable {
 
+    @Id
+    @Column(name = "id")
+    @JsonView(View.WordView.class)
+    @GeneratedValue(strategy = GenerationType.AUTO )
+    private long id;
 
     @JsonView(View.WordView.class)
     @Column(name = "russian")

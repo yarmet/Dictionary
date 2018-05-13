@@ -23,9 +23,9 @@
         ajax('/word', 'POST', JSON.stringify({
             russian: 'rus2',
             english: 'eng2',
-            wordGroup: {id: 2}
+            wordGroup: {id: 6}
         })).then(function (value) {
-            console.log(JSON.parse(value))
+            console.log(value)
         });
     };
 
@@ -38,12 +38,12 @@
 
     document.getElementById('addgroup').onclick = function (ev) {
         ajax('/groups', 'POST', JSON.stringify({name: 'test group 2'})).then(function (value) {
-            console.log(JSON.parse(value))
+            console.log(value)
         });
     };
 
     document.getElementById('getword').onclick = function (ev) {
-        ajax('/getWords/1', 'POST', null).then(function (value) {
+        ajax('/getWords/6', 'POST', null).then(function (value) {
             console.log(JSON.parse(value))
         });
     };

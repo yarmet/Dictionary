@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface JpaWordGroupsRepository extends JpaRepository<WordGroup, Long> {
 
-//    List<WordGroup> getByUserUsername(String user);
-
     List<WordGroup> findByUserUsername(String username);
 }

@@ -16,7 +16,13 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "word_groups")
-public class WordGroup extends SuperClass implements Serializable {
+public class WordGroup implements Serializable {
+
+    @Id
+    @Column(name = "id")
+    @JsonView(View.WordGroupView.class)
+    @GeneratedValue(strategy = GenerationType.AUTO )
+    private long id;
 
     @Column(name = "name")
     @JsonView(View.WordGroupView.class)

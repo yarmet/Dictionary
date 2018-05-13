@@ -1,6 +1,5 @@
 package com.components.service;
 
-import com.components.database.models.Role;
 import com.components.database.repository.JpaUserRepository;
 import com.components.database.models.User;
 import com.components.utils.Utils;

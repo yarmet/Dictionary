@@ -64,7 +64,7 @@ public class UserService {
         }
     }
 
-
+    @Transactional
     public User findByUserName(String userName) {
         return userRepository.findByUsername(userName);
     }

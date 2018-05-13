@@ -16,7 +16,12 @@ import java.util.stream.Collectors;
 @Setter
 @Entity
 @Table(name = "users")
-public class User extends SuperClass implements UserDetails {
+public class User implements UserDetails {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO )
+    private long id;
 
     @Column(name = "username", unique = true)
     private String username;

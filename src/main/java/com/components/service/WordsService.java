@@ -31,12 +31,12 @@ public class WordsService {
     @Autowired
     private RandomWordsRepository randomWordsRepository;
 
-
+    @Transactional
     public Word update(Word word) {
         return jpaWordRepository.save(word);
     }
 
-
+    @Transactional
     public void delete(Word word) {
         jpaWordRepository.delete(word);
     }
@@ -50,8 +50,8 @@ public class WordsService {
         return jpaWordRepository.save(word);
     }
 
-
-    public List<Word> getRandomWords(int groupId) {
+    @Transactional
+    public List<Word> getRandomWords(long groupId) {
         return randomWordsRepository.getAnyRandomWords(groupId, wordCount);
     }
 
