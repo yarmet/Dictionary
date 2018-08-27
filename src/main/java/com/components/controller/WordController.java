@@ -32,8 +32,8 @@ public class WordController {
     @JsonView(View.WordView.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "/word", method = RequestMethod.POST)
-    public void addWord(@RequestBody Word word) {
-        wordsService.save(word);
+    public ResponseEntity<?> addWord(@RequestBody Word word) {
+       return ResponseEntity.ok(wordsService.save(word));
     }
 
 

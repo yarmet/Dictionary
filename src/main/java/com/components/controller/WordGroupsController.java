@@ -25,8 +25,7 @@ public class WordGroupsController {
 
     @RequestMapping(value = "groups", method = RequestMethod.POST)
     public ResponseEntity<?> addGroup(@RequestBody WordGroup wordGroup) {
-        wordGroupService.save(wordGroup);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(wordGroupService.save(wordGroup));
     }
 
     @RequestMapping(value = "groups", method = RequestMethod.DELETE)
