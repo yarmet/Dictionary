@@ -22,7 +22,7 @@ public class WordController {
 
     @JsonView(View.WordView.class)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @RequestMapping(value = "/getWords/{groupId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/getWords/{groupId}", method = RequestMethod.GET)
     public ResponseEntity<?> getWords(@PathVariable long groupId) {
         List<Word> words = wordsService.getRandomWords(groupId);
         return ResponseEntity.ok(words);

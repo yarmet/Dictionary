@@ -38,7 +38,7 @@ public class UserController {
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome() {
-        return "static/index.html";
+        return "index";
     }
 
 }
