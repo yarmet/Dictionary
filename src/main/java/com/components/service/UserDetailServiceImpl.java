@@ -27,7 +27,7 @@ class UserDetailServiceImpl implements UserDetailsService {
         }
         // обновляем дату последнего логина на сайт
         user.setDateOfLastEntry(Utils.getCurrentTimestampAsUTC());
-        userRepository.save(user);
+        userRepository.save(user);  // проверить нужно ли это т.к. возможно сущность атачнута.
 
         return user;
     }
